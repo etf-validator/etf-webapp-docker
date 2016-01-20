@@ -12,7 +12,7 @@ getLatestFromII() {
     versionSubPath=$(wget -O- --user=etf-public-releases --password=etf-public-releases $url | grep -v "maven" | grep -o -E 'href="([^"#]+)"' | cut -d'"' -f2 | sort -V | tail -1)
     latest=$(wget -O- --user=etf-public-releases --password=etf-public-releases $url/$versionSubPath | egrep -o $eex | sort -V | tail -1)
     echo $latest
-    wget --user=etf-public-releases --password=etf-public-releases $url/$versionSubPath/$latest -O $dest
+    wget -q --user=etf-public-releases --password=etf-public-releases $url/$versionSubPath/$latest -O $dest
     # TODO verifiy checksum
     md5sum $dest
     chown -R jetty:jetty $dest
@@ -26,7 +26,7 @@ getSpecificFromII() {
     dest=$4
     versionSubPath=$(wget -O- --user=etf-public-releases --password=etf-public-releases $url | grep -v "maven" | grep -o -E 'href="([^"#]+)"' | cut -d'"' -f2 | sort -V | tail -1)
     latest=$(wget -O- --user=etf-public-releases --password=etf-public-releases $url/$versionSubPath | egrep -o $eex | grep $version | tail -1)
-    wget --user=etf-public-releases --password=etf-public-releases $url/$versionSubPath/$latest -O $dest
+    wget -q --user=etf-public-releases --password=etf-public-releases $url/$versionSubPath/$latest -O $dest
     # TODO verifiy checksum
     md5sum $dest
     chown -R jetty:jetty $dest
@@ -36,7 +36,7 @@ getSpecificFromII() {
 getFrom() {
     url=$1
     dest=$2
-    wget --user=etf-public-releases --password=etf-public-releases $url -O $dest
+    wget -q --user=etf-public-releases --password=etf-public-releases $url -O $dest
 }
 
 #$1 relative path, $2 egrep, $3 configured value, $4 destination
