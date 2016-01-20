@@ -66,6 +66,7 @@ if [ ! "$(ls -A $ETF_DIR/ds)" ]; then
     unzip /var/lib/jetty/webapps/etf-webapp.war WEB-INF/etf/ds/* -d /tmp/etf_ds
     mv /tmp/etf_ds/WEB-INF/etf/ds "$ETF_DIR/ds"
     rm -R /tmp/etf_ds
+    mkdir -p $ETF_DIR/ds/obj
 fi
 
 if [ ! -d "$ETF_DIR"/reportstyles ]; then
