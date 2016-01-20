@@ -48,15 +48,13 @@ get() {
     fi
 }
 
-if [ ! -d "$ETF_DIR" ]; then
-    mkdir -p "$ETF_DIR"
-    mkdir -p "$ETF_DIR"/bak
-    mkdir -p "$ETF_DIR"/td
-    mkdir -p "$ETF_DIR"/http_uploads
-    mkdir -p "$ETF_DIR"/projects/bsx
-    mkdir -p "$ETF_DIR"/projects/sui
-    mkdir -p "$ETF_DIR"/testdata
-fi
+mkdir -p "$ETF_DIR"/bak
+mkdir -p "$ETF_DIR"/td
+mkdir -p "$ETF_DIR"/http_uploads
+mkdir -p "$ETF_DIR"/projects/bsx
+mkdir -p "$ETF_DIR"/projects/sui
+mkdir -p "$ETF_DIR"/testdata
+mkdir -p "$ETF_DIR"/td
 
 if [ ! -f /var/lib/jetty/webapps/etf-webapp.war ]; then
     get de/interactive_instruments/etf/etf-webapp etf-webapp-[0-9\.]+.war "$ETF_WEBAPP_VERSION" /var/lib/jetty/webapps/etf-webapp.war
@@ -77,7 +75,7 @@ if [ ! -d "$ETF_DIR"/reportstyles ]; then
   rm -R /tmp/etf_reportstyles
 fi
 
-if [ -n "$ETF_TESTDRIVER_BSX_VERSION" ] && [ "$ETF_TESTDRIVER_BSX_VERSION" != "none" ]; then
+if [ ! -d "$ETF_DIR"/td/bsx ] && [ -n "$ETF_TESTDRIVER_BSX_VERSION" ] && [ "$ETF_TESTDRIVER_BSX_VERSION" != "none" ]; then
   get de/interactive_instruments/etf/testdriver/etf-bsxtd/ etf-bsxtd-[0-9\.]+.zip "$ETF_TESTDRIVER_BSX_VERSION" /tmp/etf_bsxtd.zip
   unzip /tmp/etf_bsxtd.zip -d /tmp/etf_bsxtd
   mv /tmp/etf_bsxtd/bsx "$ETF_DIR"/td/bsx
@@ -85,7 +83,7 @@ if [ -n "$ETF_TESTDRIVER_BSX_VERSION" ] && [ "$ETF_TESTDRIVER_BSX_VERSION" != "n
   rm -R /tmp/etf_bsxtd
 fi
 
-if [ -n "$ETF_TESTDRIVER_SUI_VERSION" ] && [ "$ETF_TESTDRIVER_SUI_VERSION" != "none" ]; then
+if [ ! -d "$ETF_DIR"/td/sui ] && [ -n "$ETF_TESTDRIVER_SUI_VERSION" ] && [ "$ETF_TESTDRIVER_SUI_VERSION" != "none" ]; then
   get de/interactive_instruments/etf/testdriver/etf-suitd/ etf-suitd-[0-9\.]+.zip "$ETF_TESTDRIVER_SUI_VERSION" /tmp/etf_suitd.zip
   unzip /tmp/etf_suitd.zip -d /tmp/etf_suitd
   mv /tmp/etf_suitd/sui "$ETF_DIR"/td/sui
