@@ -1,0 +1,26 @@
+# Use nginx as HTTP proxy
+etfproxy:
+ image: nginx
+ restart: unless-stopped
+ volumes:
+  - ./nginx.conf:/etc/nginx/nginx.conf:ro
+  - ./htpasswd.txt:/etc/nginx/.htpasswd:ro
+ log_driver: "json-file"
+ log_opt:
+  max-size: "5000k"
+  max-file: "5"
+ ports:
+  - "80:80"
+ links:
+  - etfwebapp
+
+etfwebapp:
+ image: iide/etf-webapp
+ restart: unless-stopped
+ volumes:
+  - /etf:/etf
+  - ./etf-config.properties:/etf/etf-config.properties:ro
+ log_driver: "json-file"
+ log_opt:
+  max-size: "5000k"
+  max-file: "5"

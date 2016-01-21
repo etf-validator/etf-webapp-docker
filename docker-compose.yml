@@ -1,6 +1,0 @@
-etf:
-  image: iide/etf-webapp
-  ports:
-   - "8080:8080"
-  volumes:
-   - /etf:/etf
