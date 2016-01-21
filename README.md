@@ -11,7 +11,7 @@ Make sure you have installed
 [docker-compose](https://docs.docker.com/compose/install/). The compose script can be found in the _etfenv_ directory.
 
 The compose script will setup a protected nginx webserver (User/Password: etf/etf)
-which proxies all requests to the etf-webapp container. The htpasswd.txt and
+which forwards all requests to the etf-webapp container. The htpasswd.txt and
 the _nginx.conf_ files are mounted read only in the container.
 You can edit the config file or use _htpasswd_ to create credentials.
 
