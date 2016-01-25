@@ -20,6 +20,9 @@ ENV ETF_TESTDRIVER_BSX_VERSION latest
 # Possible values: “none”, “latest” or <version>
 ENV ETF_TESTDRIVER_SUI_VERSION latest
 
+# Possible values: “none”, “latest” or <version>
+ENV ETF_GMLGEOX_VERSION latest
+
 # Possible values: “none”, comma separated list of <URL>s to zip files
 # ENV ETF_TESTPROJECTS none
 

@@ -75,12 +75,20 @@ if [ ! -d "$ETF_DIR"/reportstyles ]; then
   rm -R /tmp/etf_reportstyles
 fi
 
-if [ ! -d "$ETF_DIR"/td/bsx ] && [ -n "$ETF_TESTDRIVER_BSX_VERSION" ] && [ "$ETF_TESTDRIVER_BSX_VERSION" != "none" ]; then
-  get de/interactive_instruments/etf/testdriver/etf-bsxtd/ etf-bsxtd-[0-9\.]+.zip "$ETF_TESTDRIVER_BSX_VERSION" /tmp/etf_bsxtd.zip
-  unzip /tmp/etf_bsxtd.zip -d /tmp/etf_bsxtd
-  mv /tmp/etf_bsxtd/bsx "$ETF_DIR"/td/bsx
-  rm -R /tmp/etf_bsxtd.zip
-  rm -R /tmp/etf_bsxtd
+if [ -n "$ETF_TESTDRIVER_BSX_VERSION" ] && [ "$ETF_TESTDRIVER_BSX_VERSION" != "none" ]; then
+  if [ ! -d "$ETF_DIR"/td/bsx ]; then
+    get de/interactive_instruments/etf/testdriver/etf-bsxtd/ etf-bsxtd-[0-9\.]+.zip "$ETF_TESTDRIVER_BSX_VERSION" /tmp/etf_bsxtd.zip
+    unzip /tmp/etf_bsxtd.zip -d /tmp/etf_bsxtd
+    mv /tmp/etf_bsxtd/bsx "$ETF_DIR"/td/bsx
+    rm -R /tmp/etf_bsxtd.zip
+    rm -R /tmp/etf_bsxtd
+  fi
+
+  if [ -n "$ETF_GMLGEOX_VERSION" ] && [ "$ETF_GMLGEOX_VERSION" != "none" ]; then
+    get de/interactive_instruments/etf/bsxm/etf-gmlgeox/ etf-gmlgeox-[0-9\.]+.jar "$ETF_GMLGEOX_VERSION" /tmp/GmlGeoX.jar
+    mkdir -p /etf/ds/db/repo/de/interactive_instruments/etf/bsxm/
+    mv /tmp/GmlGeoX.jar /etf/ds/db/repo/de/interactive_instruments/etf/bsxm/
+  fi
 fi
 
 if [ ! -d "$ETF_DIR"/td/sui ] && [ -n "$ETF_TESTDRIVER_SUI_VERSION" ] && [ "$ETF_TESTDRIVER_SUI_VERSION" != "none" ]; then
@@ -96,6 +104,7 @@ if [ ! -f $ETF_WEBAPP_PROPERTIES_FILE ]; then
     mv /tmp/etf_classes/WEB-INF/classes/etf-config.properties  $ETF_WEBAPP_PROPERTIES_FILE
     rm -R /tmp/etf_classes/
 fi
+
 
 chown -R jetty:jetty "$ETF_DIR"
 set +x
