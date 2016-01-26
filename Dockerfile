@@ -8,6 +8,8 @@ ENV ETF_WEBAPP_PROPERTIES_FILE /etf/etf-config.properties
 
 # All ETF artifacts are searched in https://services.interactive-instruments.de/etfdev-af/etf-public-releases/
 
+ENV ETF_RELATIVE_URL etf-webapp
+
 # Possible values: “latest” or <version>
 ENV ETF_WEBAPP_VERSION latest
 

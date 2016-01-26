@@ -7,3 +7,4 @@
 ## 0.0.2 - 2016-01-26
 
 - Install GmlGeoX on first container start
+- Relative deployment URLs with ETF_RELATIVE_URL
