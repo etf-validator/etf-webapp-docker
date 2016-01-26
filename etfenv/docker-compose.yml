@@ -18,8 +18,15 @@ etfwebapp:
  image: iide/etf-webapp
  restart: unless-stopped
  volumes:
-  - /etf:/etf
+  - /etf/testdata:/etf/testdata
+  - /etf/ds/obj:/etf/ds/obj
+  - /etf/ds/appendices:/etf/ds/appendices
+  - /etf/ds/db/data:/etf/ds/db/data
+  - /etf/http_uploads:/etf/http_uploads
+  - /etf/projects:/etf/projects
+  - /etf/bak:/etf/bak
   - ./etf-config.properties:/etf/etf-config.properties:ro
+  # Reports and test drivers are stored in the container
  log_driver: "json-file"
  log_opt:
   max-size: "5000k"

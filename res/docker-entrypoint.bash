@@ -54,7 +54,6 @@ mkdir -p "$ETF_DIR"/http_uploads
 mkdir -p "$ETF_DIR"/projects/bsx
 mkdir -p "$ETF_DIR"/projects/sui
 mkdir -p "$ETF_DIR"/testdata
-mkdir -p "$ETF_DIR"/td
 
 if [ ! -f /var/lib/jetty/webapps/etf-webapp.war ]; then
     get de/interactive_instruments/etf/etf-webapp etf-webapp-[0-9\.]+.war "$ETF_WEBAPP_VERSION" /var/lib/jetty/webapps/etf-webapp.war
@@ -65,6 +64,7 @@ if [ ! "$(ls -A $ETF_DIR/ds)" ]; then
     mv /tmp/etf_ds/WEB-INF/etf/ds "$ETF_DIR/ds"
     rm -R /tmp/etf_ds
     mkdir -p $ETF_DIR/ds/obj
+    mkdir -p $ETF_DIR/ds/appendices
 fi
 
 if [ ! -d "$ETF_DIR"/reportstyles ]; then
@@ -84,10 +84,12 @@ if [ -n "$ETF_TESTDRIVER_BSX_VERSION" ] && [ "$ETF_TESTDRIVER_BSX_VERSION" != "n
     rm -R /tmp/etf_bsxtd
   fi
 
-  if [ -n "$ETF_GMLGEOX_VERSION" ] && [ "$ETF_GMLGEOX_VERSION" != "none" ]; then
+  if [ ! -f "$ETF_DIR"/ds/db/repo/de/interactive_instruments/etf/bsxm/GmlGeoX.jar ] && [ -n "$ETF_GMLGEOX_VERSION" ] && [ "$ETF_GMLGEOX_VERSION" != "none" ]; then
     get de/interactive_instruments/etf/bsxm/etf-gmlgeox/ etf-gmlgeox-[0-9\.]+.jar "$ETF_GMLGEOX_VERSION" /tmp/GmlGeoX.jar
-    mkdir -p /etf/ds/db/repo/de/interactive_instruments/etf/bsxm/
-    mv /tmp/GmlGeoX.jar /etf/ds/db/repo/de/interactive_instruments/etf/bsxm/
+    mkdir -p "$ETF_DIR"/ds/db/repo/de/interactive_instruments/etf/bsxm/
+    mv /tmp/GmlGeoX.jar "$ETF_DIR"/ds/db/repo/de/interactive_instruments/etf/bsxm/
+    # tmp workaround (dom4j classloader problem)
+    unzip "$ETF_DIR"/ds/db/repo/de/interactive_instruments/etf/bsxm/GmlGeoX.jar -d "$ETF_DIR"/td/bsx/lib
   fi
 fi
 
@@ -106,7 +108,19 @@ if [ ! -f $ETF_WEBAPP_PROPERTIES_FILE ]; then
 fi
 
 
+chmod 550 -R "$ETF_DIR"/td
+chmod 550 -R "$ETF_DIR"/projects
+chmod 550 -R "$ETF_DIR"/ds/db/repo
+
+chmod 770 -R "$ETF_DIR"/ds/obj
+chmod 770 -R "$ETF_DIR"/ds/db/data
+chmod 770 -R "$ETF_DIR"/ds/appendices
+chmod 770 -R "$ETF_DIR"/http_uploads
+chmod 770 -R "$ETF_DIR"/testdata
+chmod 770 -R "$ETF_DIR"/bak
+
 chown -R jetty:jetty "$ETF_DIR"
+
 set +x
 /docker-entrypoint-jetty.bash
 
