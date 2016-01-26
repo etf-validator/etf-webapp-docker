@@ -55,12 +55,16 @@ mkdir -p "$ETF_DIR"/projects/bsx
 mkdir -p "$ETF_DIR"/projects/sui
 mkdir -p "$ETF_DIR"/testdata
 
-if [ ! -f /var/lib/jetty/webapps/"$RELATIVE_URL".war ]; then
-    get de/interactive_instruments/etf/etf-webapp etf-webapp-[0-9\.]+.war "$ETF_WEBAPP_VERSION" /var/lib/jetty/webapps/"$RELATIVE_URL".war
+if [ ! -n "$ETF_RELATIVE_URL" ]; then
+    ETF_RELATIVE_URL=etf-webapp
+fi
+
+if [ ! -f /var/lib/jetty/webapps/"$ETF_RELATIVE_URL".war ]; then
+    get de/interactive_instruments/etf/etf-webapp etf-webapp-[0-9\.]+.war "$ETF_WEBAPP_VERSION" /var/lib/jetty/webapps/"$ETF_RELATIVE_URL".war
 fi
 
 if [ ! "$(ls -A $ETF_DIR/ds)" ]; then
-    unzip /var/lib/jetty/webapps/"$RELATIVE_URL".war WEB-INF/etf/ds/* -d /tmp/etf_ds
+    unzip /var/lib/jetty/webapps/"$ETF_RELATIVE_URL".war WEB-INF/etf/ds/* -d /tmp/etf_ds
     mv /tmp/etf_ds/WEB-INF/etf/ds "$ETF_DIR/ds"
     rm -R /tmp/etf_ds
     mkdir -p $ETF_DIR/ds/obj
@@ -102,7 +106,7 @@ if [ ! -d "$ETF_DIR"/td/sui ] && [ -n "$ETF_TESTDRIVER_SUI_VERSION" ] && [ "$ETF
 fi
 
 if [ ! -f $ETF_WEBAPP_PROPERTIES_FILE ]; then
-    unzip /var/lib/jetty/webapps/"$RELATIVE_URL".war WEB-INF/classes/* -d /tmp/etf_classes
+    unzip /var/lib/jetty/webapps/"$ETF_RELATIVE_URL".war WEB-INF/classes/* -d /tmp/etf_classes
     mv /tmp/etf_classes/WEB-INF/classes/etf-config.properties  $ETF_WEBAPP_PROPERTIES_FILE
     rm -R /tmp/etf_classes/
 fi
