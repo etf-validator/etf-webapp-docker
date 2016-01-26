@@ -8,7 +8,8 @@ The image is based on the official jetty image.
 
 ## Setup etf-webapp with docker-compose
 Make sure you have installed
-[docker-compose](https://docs.docker.com/compose/install/). The compose script can be found in the _etfenv_ directory.
+[docker-compose](https://docs.docker.com/compose/install/). The compose script can be found in the
+_[etfenv](https://github.com/interactive-instruments/etf-webapp-docker/tree/master/etfenv)_ directory.
 
 The compose script will setup a protected nginx webserver (User/Password: etf/etf)
 which forwards all requests to the etf-webapp container. The htpasswd.txt and
