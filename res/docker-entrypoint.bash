@@ -92,8 +92,10 @@ if [ -n "$ETF_TESTDRIVER_BSX_VERSION" ] && [ "$ETF_TESTDRIVER_BSX_VERSION" != "n
     get de/interactive_instruments/etf/bsxm/etf-gmlgeox/ etf-gmlgeox-[0-9\.]+.jar "$ETF_GMLGEOX_VERSION" /tmp/GmlGeoX.jar
     mkdir -p "$ETF_DIR"/ds/db/repo/de/interactive_instruments/etf/bsxm/
     mv /tmp/GmlGeoX.jar "$ETF_DIR"/ds/db/repo/de/interactive_instruments/etf/bsxm/
-    # tmp workaround (dom4j classloader problem)
+    # tmp workaround (Classloader fails to load dom4j)
     unzip "$ETF_DIR"/ds/db/repo/de/interactive_instruments/etf/bsxm/GmlGeoX.jar -d "$ETF_DIR"/td/bsx/lib
+    # tmp workaround (Classloader fails to load Regex Util matches function )
+    cp "$ETF_DIR"/ds/db/repo/de/interactive_instruments/etf/bsxm/GmlGeoX.jar -d "$ETF_DIR"/td/bsx/lib
   fi
 fi
 
