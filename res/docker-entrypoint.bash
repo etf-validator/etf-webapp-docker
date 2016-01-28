@@ -54,6 +54,10 @@ mkdir -p "$ETF_DIR"/http_uploads
 mkdir -p "$ETF_DIR"/projects/bsx
 mkdir -p "$ETF_DIR"/projects/sui
 mkdir -p "$ETF_DIR"/testdata
+mkdir -p "$ETF_DIR"/ds/obj
+mkdir -p "$ETF_DIR"/ds/appendices
+mkdir -p "$ETF_DIR"/ds/db/repo
+mkdir -p "$ETF_DIR"/ds/db/data
 
 if [ ! -n "$ETF_RELATIVE_URL" ]; then
     ETF_RELATIVE_URL=etf-webapp
@@ -63,12 +67,11 @@ if [ ! -f /var/lib/jetty/webapps/"$ETF_RELATIVE_URL".war ]; then
     get de/interactive_instruments/etf/etf-webapp etf-webapp-[0-9\.]+.war "$ETF_WEBAPP_VERSION" /var/lib/jetty/webapps/"$ETF_RELATIVE_URL".war
 fi
 
-if [ ! "$(ls -A $ETF_DIR/ds)" ]; then
+if [ ! "$(ls -A $ETF_DIR/ds/db/repo)" ]; then
     unzip /var/lib/jetty/webapps/"$ETF_RELATIVE_URL".war WEB-INF/etf/ds/* -d /tmp/etf_ds
-    mv /tmp/etf_ds/WEB-INF/etf/ds "$ETF_DIR/ds"
+    rmdir "$ETF_DIR"/ds/db/repo
+    mv /tmp/etf_ds/WEB-INF/etf/ds/db/repo "$ETF_DIR/ds/db/repo"
     rm -R /tmp/etf_ds
-    mkdir -p $ETF_DIR/ds/obj
-    mkdir -p $ETF_DIR/ds/appendices
 fi
 
 if [ ! -d "$ETF_DIR"/reportstyles ]; then
