@@ -2,15 +2,15 @@
 
 set -x
 
-basicArtifactoryUrl=https://services.interactive-instruments.de/etfdev-af/etf-public-releases
+basicArtifactoryUrl=$REPO_URL
 
 # $1 relative path, $2 egrep regex, $3 destination
 getLatestFromII() {
     url=$basicArtifactoryUrl/$1
     eex=$2
     dest=$3
-    versionSubPath=$(wget -O- --user=etf-public-releases --password=etf-public-releases $url | grep -v "maven" | grep -o -E 'href="([^"#]+)"' | cut -d'"' -f2 | sort -V | tail -1)
-    latest=$(wget -O- --user=etf-public-releases --password=etf-public-releases $url/$versionSubPath | egrep -o $eex | sort -V | tail -1)
+    versionSubPath=$(wget -O- --user=$REPO_USER --password=$REPO_PWD $url | grep -v "maven" | grep -o -E 'href="([^"#]+)"' | cut -d'"' -f2 | sort -V | tail -1)
+    latest=$(wget -O- --user=$REPO_USER --password=$REPO_PWD $url/$versionSubPath | egrep -o $eex | sort -V | tail -1)
     echo $latest
     wget -q --user=etf-public-releases --password=etf-public-releases $url/$versionSubPath/$latest -O $dest
     # TODO verifiy checksum
@@ -24,8 +24,8 @@ getSpecificFromII() {
     eex=$2
     version=$3
     dest=$4
-    versionSubPath=$(wget -O- --user=etf-public-releases --password=etf-public-releases $url | grep -v "maven" | grep -o -E 'href="([^"#]+)"' | cut -d'"' -f2 | sort -V | tail -1)
-    latest=$(wget -O- --user=etf-public-releases --password=etf-public-releases $url/$versionSubPath | egrep -o $eex | grep $version | tail -1)
+    versionSubPath=$(wget -O- --user=$REPO_USER--password=$REPO_PWD $url | grep -v "maven" | grep -o -E 'href="([^"#]+)"' | cut -d'"' -f2 | sort -V | tail -1)
+    latest=$(wget -O- --user=$REPO_USER --password=$REPO_PWD $url/$versionSubPath | egrep -o $eex | grep $version | tail -1)
     wget -q --user=etf-public-releases --password=etf-public-releases $url/$versionSubPath/$latest -O $dest
     # TODO verifiy checksum
     md5sum $dest
@@ -36,7 +36,7 @@ getSpecificFromII() {
 getFrom() {
     url=$1
     dest=$2
-    wget -q --user=etf-public-releases --password=etf-public-releases $url -O $dest
+    wget -q --user=$REPO_USER--password=$REPO_PWD $url -O $dest
 }
 
 #$1 relative path, $2 egrep, $3 configured value, $4 destination
