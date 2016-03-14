@@ -1,8 +1,14 @@
 #!/bin/bash
 
+# Requires:
+# -unzip
+# -wget
+
 set -x
 
 basicArtifactoryUrl=$REPO_URL
+appServerDeplPath=/var/lib/jetty/webapps
+appServerUserGroup=jetty:jetty
 
 # $1 relative path, $2 egrep regex, $3 destination
 getLatestFromII() {
@@ -15,7 +21,7 @@ getLatestFromII() {
     wget -q --user=etf-public-releases --password=etf-public-releases $url/$versionSubPath/$latest -O $dest
     # TODO verifiy checksum
     md5sum $dest
-    chown -R jetty:jetty $dest
+    chown -R $appServerUserGroup $dest
 }
 
 # $1 relative path, $2 egrep regex, $version, $4 destination
@@ -29,7 +35,7 @@ getSpecificFromII() {
     wget -q --user=etf-public-releases --password=etf-public-releases $url/$versionSubPath/$latest -O $dest
     # TODO verifiy checksum
     md5sum $dest
-    chown -R jetty:jetty $dest
+    chown -R $appServerUserGroup $dest
 }
 
 # $1 full path with artifact name and version, $2 destination
@@ -63,12 +69,12 @@ if [ ! -n "$ETF_RELATIVE_URL" ]; then
     ETF_RELATIVE_URL=etf-webapp
 fi
 
-if [ ! -f /var/lib/jetty/webapps/"$ETF_RELATIVE_URL".war ]; then
-    get de/interactive_instruments/etf/etf-webapp etf-webapp-[0-9\.]+.war "$ETF_WEBAPP_VERSION" /var/lib/jetty/webapps/"$ETF_RELATIVE_URL".war
+if [ ! -f "$appServerDeplPath/$ETF_RELATIVE_URL".war ]; then
+    get de/interactive_instruments/etf/etf-webapp etf-webapp-[0-9\.]+.war "$ETF_WEBAPP_VERSION" "$appServerDeplPath/$ETF_RELATIVE_URL".war
 fi
 
 if [ ! "$(ls -A $ETF_DIR/ds/db/repo)" ]; then
-    unzip /var/lib/jetty/webapps/"$ETF_RELATIVE_URL".war WEB-INF/etf/ds/* -d /tmp/etf_ds
+    unzip "$appServerDeplPath/$ETF_RELATIVE_URL".war WEB-INF/etf/ds/* -d /tmp/etf_ds
     rmdir "$ETF_DIR"/ds/db/repo
     mv /tmp/etf_ds/WEB-INF/etf/ds/db/repo "$ETF_DIR/ds/db/repo"
     rm -R /tmp/etf_ds
@@ -111,7 +117,7 @@ if [ ! -d "$ETF_DIR"/td/sui ] && [ -n "$ETF_TESTDRIVER_SUI_VERSION" ] && [ "$ETF
 fi
 
 if [ ! -f $ETF_WEBAPP_PROPERTIES_FILE ]; then
-    unzip /var/lib/jetty/webapps/"$ETF_RELATIVE_URL".war WEB-INF/classes/* -d /tmp/etf_classes
+    unzip "$appServerDeplPath/$ETF_RELATIVE_URL".war WEB-INF/classes/* -d /tmp/etf_classes
     mv /tmp/etf_classes/WEB-INF/classes/etf-config.properties  $ETF_WEBAPP_PROPERTIES_FILE
     rm -R /tmp/etf_classes/
 fi
@@ -128,7 +134,7 @@ chmod 770 -R "$ETF_DIR"/http_uploads
 chmod 770 -R "$ETF_DIR"/testdata
 chmod 770 -R "$ETF_DIR"/bak
 
-chown -R jetty:jetty "$ETF_DIR"
+chown -R $appServerUserGroup $ETF_DIR
 
 set +x
 /docker-entrypoint-jetty.bash
