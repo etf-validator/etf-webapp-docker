@@ -32,4 +32,4 @@ docker-compose up -d
 ```
 
 ## Install Executable Test Suites (test projects)
-Copy BaseX-based test projects to the _/etf/td/bsx_ directory, SoapUI-based test projects to the _/etf/td/sui_ directory. A restart of the container is not required, since test projects are reloaded automatically after a few seconds.
+Copy BaseX-based test projects to the _/etf/projects/bsx_ directory, SoapUI-based test projects to the _/etf/projects/sui_ directory. A restart of the container is not required, since test projects are reloaded automatically after a few seconds.
