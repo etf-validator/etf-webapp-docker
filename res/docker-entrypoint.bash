@@ -124,8 +124,11 @@ fi
 
 
 chmod 550 -R "$ETF_DIR"/td
-chmod 550 -R "$ETF_DIR"/projects
 chmod 550 -R "$ETF_DIR"/ds/db/repo
+
+chmod 550 -R "$ETF_DIR"/projects
+chmod 770 "$ETF_DIR"/projects/bsx
+chmod 770 "$ETF_DIR"/projects/sui
 
 chmod 770 -R "$ETF_DIR"/ds/obj
 chmod 770 -R "$ETF_DIR"/ds/db/data
