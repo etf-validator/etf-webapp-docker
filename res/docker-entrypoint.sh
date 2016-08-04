@@ -164,9 +164,9 @@ else
   xms_xmx="-Xms2g -Xmx${max_xmx_kb}k"
 fi
 
-JAVA_OPTS="-server -XX:+UseConcMarkSweepGC -XX:+UseParNewGC $xms_xmx"
-export JAVA_OPTS
-echo "Using JAVA_OPTS: ${JAVA_OPTS}"
+JAVA_OPTIONS="-server -XX:+UseConcMarkSweepGC -XX:+UseParNewGC $xms_xmx"
+export JAVA_OPTIONS
+echo "Using JAVA_OPTIONS: ${JAVA_OPTIONS}"
 
 
 set +x
