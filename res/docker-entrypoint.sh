@@ -170,6 +170,6 @@ echo "Using JAVA_OPTS: ${JAVA_OPTS}"
 
 
 set +x
-/docker-entrypoint-jetty.bash
+/docker-entrypoint-jetty.sh
 
 exec "$@"

@@ -40,5 +40,5 @@ ENV REPO_PWD etf-public-releases
 # Maximum JAVA heap size (XmX parameter) in MB or “max” (max available memory-768MB if at least 3GB available)
 ENV MAX_MEM max
 
-RUN mv /docker-entrypoint.bash /docker-entrypoint-jetty.bash
-COPY res/docker-entrypoint.bash /
+RUN mv /docker-entrypoint.sh /docker-entrypoint-jetty.sh
+COPY res/docker-entrypoint.sh /
