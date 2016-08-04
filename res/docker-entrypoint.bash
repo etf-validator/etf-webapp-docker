@@ -139,6 +139,36 @@ chmod 770 -R "$ETF_DIR"/bak
 
 chown -R $appServerUserGroup $ETF_DIR
 
+max_mem_kb=0
+if [ -n "$MAX_MEM" ] && [ "$MAX_MEM" != "max" ] && [ "$MAX_MEM" != "0" ]; then
+  re='^[0-9]+$'
+  if ! [[ $MAX_MEM =~ $re ]] ; then
+     echo "MAX_MEM: Not a number" >&2; exit 1
+  fi
+  max_mem_kb=$(($MAX_MEM*1024))
+else
+  # in KB
+  max_mem_kb=$(cat /proc/meminfo | grep MemTotal | awk '{ print $2 }')
+fi
+
+if [[ $max_mem_kb -lt 1048576 ]]; then
+  echo "At least 1GB ram is required"
+  exit 1;
+fi
+
+xms_xmx=""
+if [[ $max_mem_kb -lt 3145728 ]]; then
+  xms_xmx=""
+else
+  max_xmx_kb=$(($max_mem_kb-786432))
+  xms_xmx="-Xms2g -Xmx${max_xmx_kb}k"
+fi
+
+JAVA_OPTS="-server -XX:+UseConcMarkSweepGC -XX:+UseParNewGC $xms_xmx"
+export JAVA_OPTS
+echo "Using JAVA_OPTS: ${JAVA_OPTS}"
+
+
 set +x
 /docker-entrypoint-jetty.bash
 

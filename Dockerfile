@@ -1,4 +1,4 @@
-FROM jetty:9.3.6
+FROM jetty:9.3.10
 MAINTAINER Jon Herrmann <herrmann at interactive-instruments.de>
 
 EXPOSE 8080
@@ -36,6 +36,9 @@ ENV REPO_PWD etf-public-releases
 
 # Enables simplified workflows (no need to create test objects in an extra step)
 # ENV ETF_WORKFLOWS default
+
+# Maximum JAVA heap size (XmX parameter) in MB or “max” (max available memory-768MB if at least 3GB available)
+ENV MAX_MEM max
 
 RUN mv /docker-entrypoint.bash /docker-entrypoint-jetty.bash
 COPY res/docker-entrypoint.bash /
