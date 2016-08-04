@@ -17,7 +17,7 @@ machine_name=$1
 
 echo "Checking machine status:"
 docker-machine status $machine_name || \
-  echo "Error checking status of machine $machine_name"
+  ( echo "Error checking status of machine $machine_name" && exit 1 )
 
 status=$(docker-machine status $machine_name)
 if [[ "$status" != "Running" ]]; then
@@ -28,6 +28,7 @@ if [[ "$status" != "Running" ]]; then
     exit 1
 fi
 target=$(docker-machine url $machine_name)
+
 echo "Starting deployment to machine $machine_name - $target"
 
 mkdir -p ./etfenv
