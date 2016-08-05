@@ -75,8 +75,8 @@ xms_xmx=""
 if [[ $max_mem_kb -lt 3145728 ]]; then
   xms_xmx=""
 else
-  # reserve 64 percent of RAM for JVM
-  max_xmx_kb=$(($max_mem_kb*64/100))
+  # 2 GB for system
+  max_xmx_kb=$(($max_mem_kb-2097152))
   xms_xmx="-Xms2g -Xmx${max_xmx_kb}k"
 fi
 
