@@ -1,12 +1,10 @@
 #!/bin/bash
 
 cur_dir="$(dirname "$0")"
-
 source "$cur_dir/machine_selection.incl.sh"
 
 log_file="status_log_${machine_name}.json"
 
-set -x
 auth=""
 if [[ -n "$2" ]]; then
   auth="-u ${2}"
@@ -19,7 +17,7 @@ echo "{\"entries\":[" > $log_file
 curl --fail $auth "$target_url" >> $log_file || exit 1
 
 function closeJson {
-  echo "]}" >> s$log_file
+  echo "]}" >> $log_file
 }
 trap closeJson EXIT
 
@@ -27,5 +25,5 @@ while true
 do
   sleep 20
   echo "," >> $log_file
-  curl "$auth" "$target_url" >> $log_file
+  curl $auth "$target_url" >> $log_file
 done

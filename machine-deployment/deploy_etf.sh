@@ -9,6 +9,7 @@
 # Run this script with "bash deploy_etf.sh <machine name>"
 #
 
+cur_dir="$(dirname "$0")"
 source "$cur_dir/machine_selection.incl.sh"
 
 echo "Starting deployment to machine $machine_name - $target_ip"
@@ -35,6 +36,6 @@ echo "Starting docker deployment..."
 docker-machine ssh "$machine_name" 'sudo bash -s' < ./compose_on_machine.sh
 echo "Deployed to $target_ip"
 if [ "$(uname)" == "Darwin" ]; then
-  open $target_ip
+  open http://$target_ip
 fi
 echo "Bye"
