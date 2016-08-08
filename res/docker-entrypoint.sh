@@ -55,30 +55,31 @@ get() {
 }
 
 max_mem_kb=0
+xms_xmx=""
 if [ -n "$MAX_MEM" ] && [ "$MAX_MEM" != "max" ] && [ "$MAX_MEM" != "0" ]; then
   re='^[0-9]+$'
   if ! [[ $MAX_MEM =~ $re ]] ; then
      echo "MAX_MEM: Not a number" >&2; exit 1
   fi
   max_mem_kb=$(($MAX_MEM*1024))
+  xms_xmx="-Xms1g -Xmx${max_xmx_kb}k"
 else
   # in KB
   max_mem_kb=$(cat /proc/meminfo | grep MemTotal | awk '{ print $2 }')
+  
+  # 4 GB in kb
+  if [[ $max_mem_kb -lt 4194304 ]]; then
+    xms_xmx="-Xms1g"
+  else
+    # 2 GB for system
+    max_xmx_kb=$(($max_mem_kb-2097152))
+    xms_xmx="-Xms2g -Xmx${max_xmx_kb}k"
+  fi
 fi
 
 if [[ $max_mem_kb -lt 1048576 ]]; then
   echo "At least 1GB ram is required"
   exit 1;
-fi
-
-xms_xmx=""
-# 4 GB in kb
-if [[ $max_mem_kb -lt 4194304 ]]; then
-  xms_xmx=""
-else
-  # 2 GB for system
-  max_xmx_kb=$(($max_mem_kb-2097152))
-  xms_xmx="-Xms2g -Xmx${max_xmx_kb}k"
 fi
 
 JAVA_OPTIONS="-server -XX:+UseConcMarkSweepGC -XX:+UseParNewGC $xms_xmx"
