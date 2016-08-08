@@ -72,7 +72,8 @@ if [[ $max_mem_kb -lt 1048576 ]]; then
 fi
 
 xms_xmx=""
-if [[ $max_mem_kb -lt 3145728 ]]; then
+# 4 GB in kb
+if [[ $max_mem_kb -lt 4194304 ]]; then
   xms_xmx=""
 else
   # 2 GB for system
