@@ -62,7 +62,7 @@ if [ -n "$MAX_MEM" ] && [ "$MAX_MEM" != "max" ] && [ "$MAX_MEM" != "0" ]; then
      echo "MAX_MEM: Not a number" >&2; exit 1
   fi
   max_mem_kb=$(($MAX_MEM*1024))
-  xms_xmx="-Xms1g -Xmx${max_xmx_kb}k"
+  xms_xmx="-Xms1g -Xmx${max_mem_kb}k"
 else
   # in KB
   max_mem_kb=$(cat /proc/meminfo | grep MemTotal | awk '{ print $2 }')
@@ -72,8 +72,8 @@ else
     xms_xmx="-Xms1g"
   else
     # 2 GB for system
-    max_xmx_kb=$(($max_mem_kb-2097152))
-    xms_xmx="-Xms2g -Xmx${max_xmx_kb}k"
+    xmx_kb=$(($max_mem_kb-2097152))
+    xms_xmx="-Xms2g -Xmx${xmx_kb}k"
   fi
 fi
 
