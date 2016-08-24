@@ -92,6 +92,7 @@ mkdir -p "$ETF_DIR"/projects/sui
 mkdir -p "$ETF_DIR"/testdata
 mkdir -p "$ETF_DIR"/ds/obj
 mkdir -p "$ETF_DIR"/ds/appendices
+mkdir -p "$ETF_DIR"/ds/attachments
 mkdir -p "$ETF_DIR"/ds/db/repo
 mkdir -p "$ETF_DIR"/ds/db/data
 
@@ -154,15 +155,14 @@ fi
 
 
 chmod 550 -R "$ETF_DIR"/td
-chmod 550 -R "$ETF_DIR"/ds/db/repo
 
-chmod 550 -R "$ETF_DIR"/projects
-chmod 770 "$ETF_DIR"/projects/bsx
-chmod 770 "$ETF_DIR"/projects/sui
+chmod 777 -R "$ETF_DIR"/ds/db/repo
+chmod 777 "$ETF_DIR"/projects
+chmod 777 -R "$ETF_DIR"/ds/obj
 
-chmod 770 -R "$ETF_DIR"/ds/obj
 chmod 770 -R "$ETF_DIR"/ds/db/data
 chmod 770 -R "$ETF_DIR"/ds/appendices
+chmod 777 -R "$ETF_DIR"/ds/attachments
 chmod 770 -R "$ETF_DIR"/http_uploads
 chmod 770 -R "$ETF_DIR"/testdata
 chmod 770 -R "$ETF_DIR"/bak
