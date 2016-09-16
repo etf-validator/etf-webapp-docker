@@ -1,2 +1,5 @@
 .DS_Store
 .dockerignore
+/machine-deployment/etfenv
+*.json
+etfenv/*.env
