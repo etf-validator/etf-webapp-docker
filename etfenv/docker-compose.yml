@@ -28,6 +28,8 @@ etfwebapp:
   - ./etf-config.properties:/etf/etf-config.properties:ro
   # Reports and test drivers are stored in the container
  log_driver: "json-file"
+ env_file:
+  - ./etfwebapp.env
  log_opt:
   max-size: "5000k"
   max-file: "5"
