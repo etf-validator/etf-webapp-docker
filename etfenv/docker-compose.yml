@@ -15,13 +15,13 @@ etfproxy:
   - etfwebapp
 
 etfwebapp:
- image: iide/etf-webapp
+ image: iide/etf-webapp:dev
  restart: unless-stopped
  volumes:
   - /etf/testdata:/etf/testdata
-  - /etf/ds/obj:/etf/ds/obj
-  - /etf/ds/appendices:/etf/ds/appendices
+  - /etf/ds/attachments:/etf/ds/attachments
   - /etf/ds/db/data:/etf/ds/db/data
+  - /etf/ds/obj:/etf/ds/obj
   - /etf/http_uploads:/etf/http_uploads
   - /etf/projects:/etf/projects
   - /etf/bak:/etf/bak

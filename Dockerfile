@@ -21,15 +21,17 @@ ENV ETF_DEFAULT_REPORTSTYLE_VERSION latest
 ENV ETF_TESTDRIVER_BSX_VERSION latest
 
 # Possible values: “latest”, <version as MAJOR.MINOR.BUGFIX> or  <version as MAJOR.MINOR>
-ENV ETF_TESTDRIVER_SUI_VERSION latest
+# TODO temporary disabled, as the ALPHA SoapUI test driver is not yet released
+# (planned for the next iteration of the ETF version 2)
+ENV ETF_TESTDRIVER_SUI_VERSION none
 
 # Possible values: “latest”, <version as MAJOR.MINOR.BUGFIX> or  <version as MAJOR.MINOR>
 ENV ETF_GMLGEOX_VERSION latest
 
 # Default repository configuration
-ENV REPO_URL https://services.interactive-instruments.de/etfdev-af/etf-public-releases
-ENV REPO_USER etf-public-releases
-ENV REPO_PWD etf-public-releases
+ENV REPO_URL https://services.interactive-instruments.de/etfdev-af/etf-public-dev
+ENV REPO_USER etf-public-dev
+ENV REPO_PWD etf-public-dev
 
 # Possible values: “none”, comma separated list of <URL>s to zip files
 # ENV ETF_TESTPROJECTS_REPO none
