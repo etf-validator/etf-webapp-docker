@@ -9,6 +9,7 @@
 Docker image of the etf web application.
 ETF is an open source testing framework for testing geo network services and data.
 The image is based on the official jetty image.
+Please [open a new issue for questions and issues regarding the installation of the docker image](https://github.com/interactive-instruments/etf-webapp-docker/issues). Please [open a new issue for questions and issues regarding the ETF Validator](https://github.com/interactive-instruments/etf-webapp/issues).
 
 ## Install etf-webapp version 1 (stable version, used in the ELF project)
 
@@ -36,11 +37,11 @@ docker-compose up -d
 ### Install Test Projects (Executable Test Suites)
 Copy BaseX-based test projects to the _/etf/projects/bsx_ directory, SoapUI-based test projects to the _/etf/projects/sui_ directory. A restart of the container is not required, since test projects are reloaded automatically after a few seconds.
 
-## Install etf-webapp APLPHA version 2 (The INSPIRE Validator preview version, not for production use, yet)
+## Install etf-webapp APLPHA version 2 (preview version, not for production use)
 
 ### Setup with docker-compose
 Follow the same installation instructions like above, but use the _[compose script from the development repository](https://github.com/interactive-instruments/etf-webapp-docker/tree/dev/etfenv)_.
 
 ### Install the INSPIRE Executable Test Suites
-Download and copy (or git clone if your familiar with GIT) the Executable Test Suites from the [ETS repository](https://github.com/interactive-instruments/ets-repository) to _/etf/projects/bsx_ directory on the target machine.
+Download and copy (or git clone, if your familiar with GIT) the Executable Test Suites from the [ETS repository](https://github.com/interactive-instruments/ets-repository) to _/etf/projects/bsx_ directory on the target machine.
 
