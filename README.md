@@ -43,5 +43,5 @@ Copy BaseX-based test projects to the _/etf/projects/bsx_ directory, SoapUI-base
 Follow the same installation instructions like above, but use the _[compose script from the development repository](https://github.com/interactive-instruments/etf-webapp-docker/tree/dev/etfenv)_.
 
 ### Install the INSPIRE Executable Test Suites
-Download and copy (or git clone, if your familiar with GIT) the Executable Test Suites from the [ETS repository](https://github.com/interactive-instruments/ets-repository) to _/etf/projects/bsx_ directory on the target machine.
+The Executable Test Suites are automatically downloaded from the [ets-repository](https://github.com/inspire-eu-validation/ets-repository) and installed into the _/etf/projects_ directory.
 
