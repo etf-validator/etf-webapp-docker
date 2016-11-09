@@ -66,7 +66,7 @@ if [ -n "$MAX_MEM" ] && [ "$MAX_MEM" != "max" ] && [ "$MAX_MEM" != "0" ]; then
 else
   # in KB
   max_mem_kb=$(cat /proc/meminfo | grep MemTotal | awk '{ print $2 }')
-  
+
   # 4 GB in kb
   if [[ $max_mem_kb -lt 4194304 ]]; then
     xms_xmx="-Xms1g"
@@ -89,8 +89,6 @@ echo "Using JAVA_OPTIONS: ${JAVA_OPTIONS}"
 mkdir -p "$ETF_DIR"/bak
 mkdir -p "$ETF_DIR"/td
 mkdir -p "$ETF_DIR"/http_uploads
-mkdir -p "$ETF_DIR"/projects/bsx
-mkdir -p "$ETF_DIR"/projects/sui
 mkdir -p "$ETF_DIR"/testdata
 mkdir -p "$ETF_DIR"/ds/obj
 mkdir -p "$ETF_DIR"/ds/appendices
@@ -122,12 +120,10 @@ if [ ! -d "$ETF_DIR"/reportstyles ]; then
 fi
 
 if [ -n "$ETF_TESTDRIVER_BSX_VERSION" ] && [ "$ETF_TESTDRIVER_BSX_VERSION" != "none" ]; then
-  if [ ! -d "$ETF_DIR"/td/bsx ]; then
-    get de/interactive_instruments/etf/testdriver/etf-bsxtd/ etf-bsxtd-[0-9\.]+.zip "$ETF_TESTDRIVER_BSX_VERSION" /tmp/etf_bsxtd.zip
-    unzip -o /tmp/etf_bsxtd.zip -d /tmp/etf_bsxtd
-    mv /tmp/etf_bsxtd/bsx "$ETF_DIR"/td/bsx
-    rm -R /tmp/etf_bsxtd.zip
-    rm -R /tmp/etf_bsxtd
+  if [ ! -f "$ETF_DIR"/td/etf-bsxtd.jar ]; then
+    get de/interactive_instruments/etf/testdriver/etf-bsxtd/ etf-bsxtd-[0-9\.]+.jar "$ETF_TESTDRIVER_BSX_VERSION" /tmp/etf-bsxtd.jar
+    mv /tmp/etf-bsxtd.jar "$ETF_DIR"/td
+    rm /tmp/etf-bsxtd.jar
   fi
 
   if [ ! -f "$ETF_DIR"/ds/db/repo/de/interactive_instruments/etf/bsxm/GmlGeoX.jar ] && [ -n "$ETF_GMLGEOX_VERSION" ] && [ "$ETF_GMLGEOX_VERSION" != "none" ]; then
@@ -135,19 +131,24 @@ if [ -n "$ETF_TESTDRIVER_BSX_VERSION" ] && [ "$ETF_TESTDRIVER_BSX_VERSION" != "n
     mkdir -p "$ETF_DIR"/ds/db/repo/de/interactive_instruments/etf/bsxm/
     mv /tmp/GmlGeoX.jar "$ETF_DIR"/ds/db/repo/de/interactive_instruments/etf/bsxm/
     # tmp workaround (Classloader fails to load dom4j)
-    unzip -o "$ETF_DIR"/ds/db/repo/de/interactive_instruments/etf/bsxm/GmlGeoX.jar -d "$ETF_DIR"/td/bsx/lib
+    # unzip -o "$ETF_DIR"/ds/db/repo/de/interactive_instruments/etf/bsxm/GmlGeoX.jar -d "$ETF_DIR"/td/bsx/lib
     # tmp workaround (Classloader fails to load Regex Util matches function )
-    cp "$ETF_DIR"/ds/db/repo/de/interactive_instruments/etf/bsxm/GmlGeoX.jar -d "$ETF_DIR"/td/bsx/lib
+    # cp "$ETF_DIR"/ds/db/repo/de/interactive_instruments/etf/bsxm/GmlGeoX.jar -d "$ETF_DIR"/td/bsx/lib
   fi
 fi
 
-if [ ! -d "$ETF_DIR"/td/sui ] && [ -n "$ETF_TESTDRIVER_SUI_VERSION" ] && [ "$ETF_TESTDRIVER_SUI_VERSION" != "none" ]; then
-  get de/interactive_instruments/etf/testdriver/etf-suitd/ etf-suitd-[0-9\.]+.zip "$ETF_TESTDRIVER_SUI_VERSION" /tmp/etf_suitd.zip
-  unzip -o /tmp/etf_suitd.zip -d /tmp/etf_suitd
-  mv /tmp/etf_suitd/sui "$ETF_DIR"/td/sui
-  rm -R /tmp/etf_suitd.zip
-  rm -R /tmp/etf_suitd
-fi
+# Temporary deactivated in this version
+#if [ ! -f "$ETF_DIR"/td/etf-suitd.jar ] && [ -n "$ETF_TESTDRIVER_SUI_VERSION" ] && [ "$ETF_TESTDRIVER_SUI_VERSION" != "none" ]; then
+#  get de/interactive_instruments/etf/testdriver/etf-suitd/ etf-suitd-[0-9\.]+.jar "$ETF_TESTDRIVER_SUI_VERSION" /tmp/etf-suitd.jar
+#  mv /tmp/etf-suitd.jar "$ETF_DIR"/td
+#  rm /tmp/etf-suitd.jar
+#fi
+
+# Download ETS repo
+curl -LOk https://github.com/inspire-eu-validation/ets-repository/archive/master.zip
+unzip -o master.zip -d "$ETF_DIR"/projects
+rm master.zip
+
 
 if [ ! -f $ETF_WEBAPP_PROPERTIES_FILE ]; then
     unzip "$appServerDeplPath/$ETF_RELATIVE_URL".war WEB-INF/classes/* -d /tmp/etf_classes
