@@ -152,9 +152,9 @@ if [ ! -f $ETF_WEBAPP_PROPERTIES_FILE ]; then
 fi
 
 
-chmod 550 -R "$ETF_DIR"/td
+chmod 770 -R "$ETF_DIR"/td
 
-chmod 777 -R "$ETF_DIR"/ds/db/repo
+chmod 770 -R "$ETF_DIR"/ds/db/repo
 chmod 777 "$ETF_DIR"/projects
 chmod 777 -R "$ETF_DIR"/ds/obj
 
@@ -164,6 +164,9 @@ chmod 777 -R "$ETF_DIR"/ds/attachments
 chmod 770 -R "$ETF_DIR"/http_uploads
 chmod 770 -R "$ETF_DIR"/testdata
 chmod 770 -R "$ETF_DIR"/bak
+
+touch "$ETF_DIR"/etf.log
+chmod 775 "$ETF_DIR"/etf.log
 
 chown -fR $appServerUserGroup $ETF_DIR
 
