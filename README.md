@@ -45,3 +45,11 @@ Follow the same installation instructions like above, but use the _[compose scri
 ### Install the INSPIRE Executable Test Suites
 The Executable Test Suites are automatically downloaded from the [ets-repository](https://github.com/inspire-eu-validation/ets-repository) and installed into the _/etf/projects_ directory.
 
+### Update
+Run the following commands in the directory of the ETF compose script
+```bash
+docker-compose stop
+docker-compose rm
+docker-compose up -d
+```
+
