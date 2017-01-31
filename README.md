@@ -37,7 +37,7 @@ docker-compose up -d
 ### Install Test Projects (Executable Test Suites)
 Copy BaseX-based test projects to the _/etf/projects/bsx_ directory, SoapUI-based test projects to the _/etf/projects/sui_ directory. A restart of the container is not required, since test projects are reloaded automatically after a few seconds.
 
-## Install etf-webapp APLPHA version 2 (preview version, not for production use)
+## Install etf-webapp version 2 (preview version, not for production use)
 
 ### Setup with docker-compose
 Follow the same installation instructions like above, but use the _[compose script from the development repository](https://github.com/interactive-instruments/etf-webapp-docker/tree/dev/etfenv)_.
