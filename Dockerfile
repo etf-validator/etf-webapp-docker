@@ -23,7 +23,7 @@ ENV ETF_TESTDRIVER_BSX_VERSION latest
 # Possible values: “latest”, <version as MAJOR.MINOR.BUGFIX> or  <version as MAJOR.MINOR>
 # TODO temporary disabled, as the ALPHA SoapUI test driver is not yet released
 # (planned for the next iteration of the ETF version 2)
-ENV ETF_TESTDRIVER_SUI_VERSION none
+ENV ETF_TESTDRIVER_SUI_VERSION latest
 
 # Possible values: “latest”, <version as MAJOR.MINOR.BUGFIX> or  <version as MAJOR.MINOR>
 ENV ETF_GMLGEOX_VERSION latest

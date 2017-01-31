@@ -133,10 +133,12 @@ if [ -n "$ETF_TESTDRIVER_BSX_VERSION" ] && [ "$ETF_TESTDRIVER_BSX_VERSION" != "n
   fi
 fi
 
-if [ ! -f "$ETF_DIR"/td/etf-suitd.jar ] && [ "$ETF_TESTDRIVER_SUI_VERSION" != "none" ]; then
-  get de/interactive_instruments/etf/testdriver/etf-suitd/ etf-suitd-[0-9\.]+.jar "$ETF_TESTDRIVER_SUI_VERSION" /tmp/etf-suitd.jar
-  mv /tmp/etf-suitd.jar "$ETF_DIR"/td
-  rm /tmp/etf-suitd.jar
+if [ -n "$ETF_TESTDRIVER_SUI_VERSION" ] && [ "$ETF_TESTDRIVER_SUI_VERSION" != "none" ]; then
+  if [ ! -f "$ETF_DIR"/td/etf-suitd.jar ]; then
+    get de/interactive_instruments/etf/testdriver/etf-suitd/ etf-suitd-[0-9\.]+.jar "$ETF_TESTDRIVER_SUI_VERSION" /tmp/etf-suitd.jar
+    mv /tmp/etf-suitd.jar "$ETF_DIR"/td
+    rm /tmp/etf-suitd.jar
+  fi
 fi
 
 # Download ETS repo
