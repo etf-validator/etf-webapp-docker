@@ -53,8 +53,7 @@ CONTAINER ID        IMAGE                 COMMAND                  CREATED      
 Open your browser and enter the URL (http://localhost/etf-webapp) which should
 show the web interface (note that the startup may need some time).
 
-Screenshot PLACEHOLDER.
-
+<img alt="screenshot ui 2017-03-21" src="https://cloud.githubusercontent.com/assets/13570741/24177217/477aa3c0-0ea1-11e7-8029-59586a607844.png">
 
 ## Setup ETF with docker-compose
 
