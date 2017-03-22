@@ -15,21 +15,21 @@ etfproxy:
   - etfwebapp
 
 etfwebapp:
- image: iide/etf-webapp:dev
+ image: iide/etf-webapp
  restart: unless-stopped
+ environment:
+  # - ETF_TESTPROJECTS_ZIP=https://github.com/.../master.zip
+  # - PROJECT_DIRECTORY_NAME=custom-ets
  volumes:
   - /etf/testdata:/etf/testdata
-  - /etf/ds/attachments:/etf/ds/attachments
-  - /etf/ds/db/data:/etf/ds/db/data
-  - /etf/ds/obj:/etf/ds/obj
   - /etf/http_uploads:/etf/http_uploads
   - /etf/projects:/etf/projects
   - /etf/bak:/etf/bak
-  - ./etf-config.properties:/etf/etf-config.properties:ro
+  - /etf/logs:/etf/logs
   # Reports and test drivers are stored in the container
+  # - /etf/ds:/etf/ds
+  # - /etf/projects:/ets/projects
  log_driver: "json-file"
- env_file:
-  - ./etfwebapp.env
  log_opt:
   max-size: "5000k"
   max-file: "5"

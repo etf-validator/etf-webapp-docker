@@ -2,6 +2,7 @@
 
 # Requires:
 # -unzip
+# -curl
 # -wget
 
 set -x
@@ -88,6 +89,7 @@ echo "Using JAVA_OPTIONS: ${JAVA_OPTIONS}"
 
 mkdir -p "$ETF_DIR"/bak
 mkdir -p "$ETF_DIR"/td
+mkdir -p "$ETF_DIR"/logs
 mkdir -p "$ETF_DIR"/http_uploads
 mkdir -p "$ETF_DIR"/testdata
 mkdir -p "$ETF_DIR"/ds/obj
@@ -95,6 +97,7 @@ mkdir -p "$ETF_DIR"/ds/appendices
 mkdir -p "$ETF_DIR"/ds/attachments
 mkdir -p "$ETF_DIR"/ds/db/repo
 mkdir -p "$ETF_DIR"/ds/db/data
+mkdir -p "$ETF_DIR"/projects
 
 if [ ! -n "$ETF_RELATIVE_URL" ]; then
     ETF_RELATIVE_URL=etf-webapp
@@ -111,25 +114,11 @@ if [ ! "$(ls -A $ETF_DIR/ds/db/repo)" ]; then
     rm -R /tmp/etf_ds
 fi
 
-if [ ! -d "$ETF_DIR"/reportstyles ]; then
-  get de/interactive_instruments/etf/reportstyle/etf-reportstyle-default/ etf-reportstyle-default-[0-9\.]+.zip "$ETF_DEFAULT_REPORTSTYLE_VERSION" /tmp/etf_reportstyles.zip
-  unzip /tmp/etf_reportstyles.zip -d /tmp/etf_reportstyles
-  mv /tmp/etf_reportstyles/etf-reportstyle-default-*/ "$ETF_DIR"/reportstyles
-  rm -R /tmp/etf_reportstyles.zip
-  rm -R /tmp/etf_reportstyles
-fi
-
 if [ -n "$ETF_TESTDRIVER_BSX_VERSION" ] && [ "$ETF_TESTDRIVER_BSX_VERSION" != "none" ]; then
   if [ ! -f "$ETF_DIR"/td/etf-bsxtd.jar ]; then
     get de/interactive_instruments/etf/testdriver/etf-bsxtd/ etf-bsxtd-[0-9\.]+.jar "$ETF_TESTDRIVER_BSX_VERSION" /tmp/etf-bsxtd.jar
     mv /tmp/etf-bsxtd.jar "$ETF_DIR"/td
     rm /tmp/etf-bsxtd.jar
-  fi
-
-  if [ ! -f "$ETF_DIR"/ds/db/repo/de/interactive_instruments/etf/bsxm/GmlGeoX.jar ] && [ -n "$ETF_GMLGEOX_VERSION" ] && [ "$ETF_GMLGEOX_VERSION" != "none" ]; then
-    get de/interactive_instruments/etf/bsxm/etf-gmlgeox/ etf-gmlgeox-[0-9\.]+.jar "$ETF_GMLGEOX_VERSION" /tmp/GmlGeoX.jar
-    mkdir -p "$ETF_DIR"/ds/db/repo/de/interactive_instruments/etf/bsxm/
-    mv /tmp/GmlGeoX.jar "$ETF_DIR"/ds/db/repo/de/interactive_instruments/etf/bsxm/
   fi
 fi
 
@@ -141,34 +130,37 @@ if [ -n "$ETF_TESTDRIVER_SUI_VERSION" ] && [ "$ETF_TESTDRIVER_SUI_VERSION" != "n
   fi
 fi
 
-# Download ETS repo
-curl -LOk https://github.com/inspire-eu-validation/ets-repository/archive/master.zip
-unzip -o master.zip -d "$ETF_DIR"/projects
-rm master.zip
+if [ ! -f "$ETF_DIR"/ds/db/repo/de/interactive_instruments/etf/bsxm/GmlGeoX.jar ] && [ -n "$ETF_GMLGEOX_VERSION" ] && [ "$ETF_GMLGEOX_VERSION" != "none" ]; then
+  get de/interactive_instruments/etf/bsxm/etf-gmlgeox/ etf-gmlgeox-[0-9\.]+.jar "$ETF_GMLGEOX_VERSION" /tmp/GmlGeoX.jar
+  mkdir -p "$ETF_DIR"/ds/db/repo/de/interactive_instruments/etf/bsxm/
+  mv /tmp/GmlGeoX.jar "$ETF_DIR"/ds/db/repo/de/interactive_instruments/etf/bsxm/
+fi
 
-
-if [ ! -f $ETF_WEBAPP_PROPERTIES_FILE ]; then
-    unzip "$appServerDeplPath/$ETF_RELATIVE_URL".war WEB-INF/classes/* -d /tmp/etf_classes
-    mv /tmp/etf_classes/WEB-INF/classes/etf-config.properties  $ETF_WEBAPP_PROPERTIES_FILE
-    rm -R /tmp/etf_classes/
+# Download Executable Test Suites
+if [ -n "$ETF_DL_TESTPROJECTS_ZIP" ] && [ "$ETF_DL_TESTPROJECTS_ZIP" != "none" ]; then
+  curl -LOk "$ETF_DL_TESTPROJECTS_ZIP" -o projects.zip
+  mkdir -p "$ETF_DIR"/projects/"$ETF_DL_TESTPROJECTS_DIR_NAME"
+  unzip -o projects.zip -d "$ETF_DIR"/projects/"$ETF_DL_TESTPROJECTS_DIR_NAME"
+  rm master.zip
 fi
 
 
 chmod 770 -R "$ETF_DIR"/td
 
+chmod 775 -R "$ETF_DIR"/ds/obj
 chmod 770 -R "$ETF_DIR"/ds/db/repo
-chmod 777 "$ETF_DIR"/projects
-chmod 777 -R "$ETF_DIR"/ds/obj
-
 chmod 770 -R "$ETF_DIR"/ds/db/data
 chmod 770 -R "$ETF_DIR"/ds/appendices
-chmod 777 -R "$ETF_DIR"/ds/attachments
-chmod 770 -R "$ETF_DIR"/http_uploads
-chmod 770 -R "$ETF_DIR"/testdata
-chmod 770 -R "$ETF_DIR"/bak
+chmod 775 -R "$ETF_DIR"/ds/attachments
 
-touch "$ETF_DIR"/etf.log
-chmod 775 "$ETF_DIR"/etf.log
+chmod 777 -R "$ETF_DIR"/projects
+
+chmod 775 -R "$ETF_DIR"/http_uploads
+chmod 775 -R "$ETF_DIR"/bak
+chmod 775 -R "$ETF_DIR"/testdata
+
+touch "$ETF_DIR"/logs/etf.log
+chmod 775 "$ETF_DIR"/logs/etf.log
 
 chown -fR $appServerUserGroup $ETF_DIR
 
