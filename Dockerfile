@@ -36,7 +36,7 @@ ENV REPO_PWD etf-public-releases
 
 # Possible values: “none”, comma separated list of <URL>s to zip files
 ENV ETF_DL_TESTPROJECTS_ZIP https://github.com/inspire-eu-validation/ets-repository/archive/master.zip
-ENV ETF_DL_TESTPROJECTS_DIR_NAME
+ENV ETF_DL_TESTPROJECTS_DIR_NAME inspire-ets-repository
 
 # Maximum JAVA heap size (XmX parameter) in MB or “max” (max available memory-768MB if at least 3GB available)
 ENV MAX_MEM max
