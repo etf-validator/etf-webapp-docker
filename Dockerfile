@@ -34,8 +34,9 @@ ENV REPO_URL https://services.interactive-instruments.de/etfdev-af/etf-public-re
 ENV REPO_USER etf-public-releases
 ENV REPO_PWD etf-public-releases
 
-# Possible values: “none”, comma separated list of <URL>s to zip files
+# Possible values: “none” or URL
 ENV ETF_DL_TESTPROJECTS_ZIP https://github.com/inspire-eu-validation/ets-repository/archive/master.zip
+# Subfolder in the projects directory
 ENV ETF_DL_TESTPROJECTS_DIR_NAME inspire-ets-repository
 
 # Maximum JAVA heap size (XmX parameter) in MB or “max” (max available memory-768MB if at least 3GB available)

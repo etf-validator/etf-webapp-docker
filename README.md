@@ -8,24 +8,17 @@ Docker image of the etf web application.
 ETF is an open source testing framework for testing geo network services and data.
 The image is based on the official jetty image.
 
-Please open a new issue for questions and issues regarding the installation of
-the docker image
-[here](https://github.com/interactive-instruments/etf-webapp-docker/issues).
+Please open a new issue for questions and issues regarding the installation ofthe docker image [here](https://github.com/interactive-instruments/etf-webapp-docker/issues).
 
-Please open a new issue for questions and issues regarding the ETF validator
-[here](https://github.com/interactive-instruments/etf-webapp/issues).
+Please open a new issue for questions and issues regarding the ETF validator [here](https://github.com/interactive-instruments/etf-webapp/issues).
 
 ## Prerequesites
 
-This docker image requires an [installed and configured the docker-engine]
-(https://docs.docker.com/engine/installation/). This image has been tested on
+This docker image requires an [installed and configured the docker-engine](https://docs.docker.com/engine/installation/). This image has been tested on
 Linux machines, on Windows machines you need at least a 64bit Windows 10 with
-Hyper-V support. Please see the (ETF wiki)
-[https://github.com/interactive-instruments/etf-webapp/wiki] for alternative
-installation options.
+Hyper-V support. Please see the [ETF wiki](https://github.com/interactive-instruments/etf-webapp/wiki) for alternative installation options.
 
-It is recommended to install [docker-compose]
-(https://docs.docker.com/compose/install/) for securing the instance with an
+It is recommended to install [docker-compose](https://docs.docker.com/compose/install/) for securing the instance with an
 HTTP proxy server and for easier updating.
 
 ## Quickstart
@@ -39,7 +32,7 @@ docker run --name etf -d -p 80:8080 -v ~/etf:/etf iide/etf-webapp:latest
 When you want to change the host data directory,
 you need to  change the first value after the '-v' parameter, for instance
 '-v /home/user1/my_etf:etf'.
-See [Docker run documentation](https://docs.docker.com/engine/reference/commandline/run/)
+See the [Docker  documentation](https://docs.docker.com/engine/reference/commandline/run/)
 for more information.
 
 The 'docker ps' command should list the running container:
@@ -53,7 +46,7 @@ CONTAINER ID        IMAGE                 COMMAND                  CREATED      
 Open your browser and enter the URL (http://localhost/etf-webapp) which should
 show the web interface (note that the startup may need some time).
 
-<img alt="screenshot ui 2017-03-21" src="https://cloud.githubusercontent.com/assets/13570741/24177217/477aa3c0-0ea1-11e7-8029-59586a607844.png">
+![alt screenshot](https://cloud.githubusercontent.com/assets/13570741/24177217/477aa3c0-0ea1-11e7-8029-59586a607844.png)
 
 ## Setup ETF with docker-compose
 
@@ -74,8 +67,7 @@ wget https://raw.githubusercontent.com/interactive-instruments/etf-webapp-docker
 The compose script will setup a protected nginx webserver (User/Password: etf/etf)
 which forwards all requests to the etf-webapp container. The htpasswd.txt and
 the _nginx.conf_ files are mounted read only in the container.
-You can edit the nginx config file or use (htpasswd)
-[https://httpd.apache.org/docs/current/programs/htpasswd.html] on your linux
+You can edit the nginx config file or use (htpasswd)[https://httpd.apache.org/docs/current/programs/htpasswd.html] on your linux
 machine to create your own credentials.
 
 Unless it is changed in the compose script (docker-compose.yml), the etf-webapp
