@@ -8,7 +8,7 @@ Docker image of the etf web application.
 ETF is an open source testing framework for testing geo network services and data.
 The image is based on the official jetty image.
 
-Please open a new issue for questions and issues regarding the installation ofthe docker image [here](https://github.com/interactive-instruments/etf-webapp-docker/issues).
+Please open a new issue for questions and issues regarding the installation of the docker image [here](https://github.com/interactive-instruments/etf-webapp-docker/issues).
 
 Please open a new issue for questions and issues regarding the ETF validator [here](https://github.com/interactive-instruments/etf-webapp/issues).
 
@@ -29,8 +29,8 @@ home directory, run the following command:
 docker run --name etf -d -p 80:8080 -v ~/etf:/etf iide/etf-webapp:latest
 ```
 
-When you want to change the host data directory,
-you need to  change the first value after the '-v' parameter, for instance
+If you need to change the host data directory,
+you must change the first value after the '-v' parameter, for instance
 '-v /home/user1/my_etf:etf'.
 See the [Docker  documentation](https://docs.docker.com/engine/reference/commandline/run/)
 for more information.
@@ -50,7 +50,7 @@ show the web interface (note that the startup may need some time).
 
 ## Setup ETF with docker-compose
 
-Make sure you have at least docker-compose 1.8 installed:
+Make sure you have at least docker-compose version 1.8 installed:
 
 ```CMD
 docker-compose -v
@@ -95,7 +95,7 @@ docker-compose up -d
 On first start, the container will download the latest version of ETF
 from the interactive instruments repository.
 
-The Executable Test Suites are automatically downloaded from the
+The INSPIRE Executable Test Suites are automatically downloaded from the
 INSPIRE [ets-repository](https://github.com/inspire-eu-validation/ets-repository) and
 installed into the _/etf/projects/inspire-ets-repository_ directory.
 
@@ -108,7 +108,7 @@ Open your browser with the URL (http://localhost) and enter the
 credentials (default etf/etf) to access the web interface. If you access the
 interface not only from your local machine, you need to edit the
 etf-config.properties config file, which will be automatically created on
-first startup in the mounter _/etf/_ directory. Change _localhost_ in
+first startup in the mounted _/etf/_ directory. Change _localhost_ in the property
 _etf.webapp.base.url_ to an IP or a domain name. Afterwards you need to restart
 the container:
 
@@ -120,7 +120,9 @@ docker-compose restart
 The log file etf.log is located in the _/etf/logs_ directory.
 
 ## Update ETF
-Run the following commands in the directory of the ETF compose script
+Run the following commands in the directory of the ETF compose script to stop
+and update the container:
+
 ```bash
 docker-compose stop
 docker-compose rm
@@ -133,9 +135,9 @@ The _/etf_ data directly does not get deleted -as long as it mounted on your
 host machine!
 
 ## Update Executable Test Suites
-To update the Executable Test Suites you can copy the new Executable Test Suites
+To update the Executable Test Suites, you can copy the new Executable Test Suites
 into the _/etf/projects/_ directory (or the subdirectories). The instance will
-automatically reload the Executable Test Suites after some time.
+automatically reload the Executable Test Suites after some minutes.
 
 ## Custom Executable Test Suites
 If you want to deploy your instance directly with custom Executable Test Suites,
