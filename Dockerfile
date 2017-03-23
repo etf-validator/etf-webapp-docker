@@ -7,6 +7,7 @@ MAINTAINER Jon Herrmann <herrmann at interactive-instruments.de>
 EXPOSE 8080
 
 ENV ETF_DIR /etf
+ENV ETF_LOG_DIR /etf/logs
 
 ENV ETF_RELATIVE_URL etf-webapp
 
