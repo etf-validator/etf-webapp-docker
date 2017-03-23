@@ -103,33 +103,30 @@ if [ ! -n "$ETF_RELATIVE_URL" ]; then
     ETF_RELATIVE_URL=etf-webapp
 fi
 
+# Download Webapp
 if [ ! -f "$appServerDeplPath/$ETF_RELATIVE_URL".war ]; then
     get de/interactive_instruments/etf/etf-webapp etf-webapp-[0-9\.]+.war "$ETF_WEBAPP_VERSION" "$appServerDeplPath/$ETF_RELATIVE_URL".war
 fi
 
-if [ ! "$(ls -A $ETF_DIR/ds/db/repo)" ]; then
-    unzip -o "$appServerDeplPath/$ETF_RELATIVE_URL".war WEB-INF/etf/ds/* -d /tmp/etf_ds
-    rmdir "$ETF_DIR"/ds/db/repo
-    mv /tmp/etf_ds/WEB-INF/etf/ds/db/repo "$ETF_DIR/ds/db/repo"
-    rm -R /tmp/etf_ds
-fi
-
+# Download BaseX test driver
 if [ -n "$ETF_TESTDRIVER_BSX_VERSION" ] && [ "$ETF_TESTDRIVER_BSX_VERSION" != "none" ]; then
-  if [ ! -f "$ETF_DIR"/td/etf-bsxtd.jar ]; then
+  if ls "$ETF_DIR"/td/etf-bsxtd*.jar 1> /dev/null 2>&1; then
     get de/interactive_instruments/etf/testdriver/etf-bsxtd/ etf-bsxtd-[0-9\.]+.jar "$ETF_TESTDRIVER_BSX_VERSION" /tmp/etf-bsxtd.jar
     mv /tmp/etf-bsxtd.jar "$ETF_DIR"/td
     rm /tmp/etf-bsxtd.jar
   fi
 fi
 
+# Download SoapUI test driver
 if [ -n "$ETF_TESTDRIVER_SUI_VERSION" ] && [ "$ETF_TESTDRIVER_SUI_VERSION" != "none" ]; then
-  if [ ! -f "$ETF_DIR"/td/etf-suitd.jar ]; then
+  if ls "$ETF_DIR"/td/etf-suitd*.jar 1> /dev/null 2>&1; then
     get de/interactive_instruments/etf/testdriver/etf-suitd/ etf-suitd-[0-9\.]+.jar "$ETF_TESTDRIVER_SUI_VERSION" /tmp/etf-suitd.jar
     mv /tmp/etf-suitd.jar "$ETF_DIR"/td
     rm /tmp/etf-suitd.jar
   fi
 fi
 
+# Download GmlGeoX
 if [ ! -f "$ETF_DIR"/ds/db/repo/de/interactive_instruments/etf/bsxm/GmlGeoX.jar ] && [ -n "$ETF_GMLGEOX_VERSION" ] && [ "$ETF_GMLGEOX_VERSION" != "none" ]; then
   get de/interactive_instruments/etf/bsxm/etf-gmlgeox/ etf-gmlgeox-[0-9\.]+.jar "$ETF_GMLGEOX_VERSION" /tmp/GmlGeoX.jar
   mkdir -p "$ETF_DIR"/ds/db/repo/de/interactive_instruments/etf/bsxm/

@@ -17,12 +17,12 @@ ENV ETF_WEBAPP_VERSION latest
 # Possible values: “latest”, <version as MAJOR.MINOR.BUGFIX> or
 # <version as MAJOR.MINOR>
 # Packed with the Webapp
-ENV ETF_TESTDRIVER_BSX_VERSION none
+ENV ETF_TESTDRIVER_BSX_VERSION latest
 
 # Possible values: “latest”, <version as MAJOR.MINOR.BUGFIX> or
 # <version as MAJOR.MINOR>
 # Packed with the Webapp
-ENV ETF_TESTDRIVER_SUI_VERSION none
+ENV ETF_TESTDRIVER_SUI_VERSION latest
 
 # Possible values: “latest”, <version as MAJOR.MINOR.BUGFIX> or
 # <version as MAJOR.MINOR>
