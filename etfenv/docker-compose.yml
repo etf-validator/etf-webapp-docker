@@ -18,6 +18,7 @@ etfwebapp:
   # - ETF_TESTPROJECTS_ZIP=https://github.com/.../master.zip
   # - PROJECT_DIRECTORY_NAME=custom-ets
  volumes:
+  - /etf/config:/etf/config
   - /etf/testdata:/etf/testdata
   - /etf/http_uploads:/etf/http_uploads
   - /etf/projects:/etf/projects

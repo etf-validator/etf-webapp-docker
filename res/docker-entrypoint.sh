@@ -98,6 +98,7 @@ mkdir -p "$ETF_DIR"/ds/attachments
 mkdir -p "$ETF_DIR"/ds/db/repo
 mkdir -p "$ETF_DIR"/ds/db/data
 mkdir -p "$ETF_DIR"/projects
+mkdir -p "$ETF_DIR"/config
 
 if [ ! -n "$ETF_RELATIVE_URL" ]; then
     ETF_RELATIVE_URL=etf-webapp
@@ -151,6 +152,7 @@ chmod 770 -R "$ETF_DIR"/ds/appendices
 chmod 775 -R "$ETF_DIR"/ds/attachments
 
 chmod 777 -R "$ETF_DIR"/projects
+chmod 777 -R "$ETF_DIR"/config
 
 chmod 775 -R "$ETF_DIR"/http_uploads
 chmod 775 -R "$ETF_DIR"/bak
