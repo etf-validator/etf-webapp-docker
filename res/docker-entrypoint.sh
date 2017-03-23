@@ -106,12 +106,16 @@ fi
 
 # Download Webapp
 if [ ! -f "$appServerDeplPath/$ETF_RELATIVE_URL".war ]; then
+    echo "Downloading ETF. This may take a while..."
     get de/interactive_instruments/etf/etf-webapp etf-webapp-[0-9\.]+.war "$ETF_WEBAPP_VERSION" "$appServerDeplPath/$ETF_RELATIVE_URL".war
 fi
 
 # Download BaseX test driver
 if [ -n "$ETF_TESTDRIVER_BSX_VERSION" ] && [ "$ETF_TESTDRIVER_BSX_VERSION" != "none" ]; then
   if ls "$ETF_DIR"/td/etf-bsxtd*.jar 1> /dev/null 2>&1; then
+    echo "Using existing BSX test driver, skipping download"
+  else
+    echo "Downloading BSX test driver"
     get de/interactive_instruments/etf/testdriver/etf-bsxtd/ etf-bsxtd-[0-9\.]+.jar "$ETF_TESTDRIVER_BSX_VERSION" /tmp/etf-bsxtd.jar
     mv /tmp/etf-bsxtd.jar "$ETF_DIR"/td
     rm /tmp/etf-bsxtd.jar
@@ -121,6 +125,9 @@ fi
 # Download SoapUI test driver
 if [ -n "$ETF_TESTDRIVER_SUI_VERSION" ] && [ "$ETF_TESTDRIVER_SUI_VERSION" != "none" ]; then
   if ls "$ETF_DIR"/td/etf-suitd*.jar 1> /dev/null 2>&1; then
+    echo "Using existing SUI test driver, skipping download"
+  else
+    echo "Downloading SUI test driver"
     get de/interactive_instruments/etf/testdriver/etf-suitd/ etf-suitd-[0-9\.]+.jar "$ETF_TESTDRIVER_SUI_VERSION" /tmp/etf-suitd.jar
     mv /tmp/etf-suitd.jar "$ETF_DIR"/td
     rm /tmp/etf-suitd.jar
