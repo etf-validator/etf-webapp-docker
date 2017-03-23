@@ -136,7 +136,7 @@ fi
 
 # Download Executable Test Suites
 if [ -n "$ETF_DL_TESTPROJECTS_ZIP" ] && [ "$ETF_DL_TESTPROJECTS_ZIP" != "none" ]; then
-  curl -LOk "$ETF_DL_TESTPROJECTS_ZIP" -o projects.zip
+  curl -Lk -o projects.zip "$ETF_DL_TESTPROJECTS_ZIP"
   mkdir -p "$ETF_DIR"/projects/"$ETF_DL_TESTPROJECTS_DIR_NAME"
   unzip -o projects.zip -d "$ETF_DIR"/projects/"$ETF_DL_TESTPROJECTS_DIR_NAME"
   rm master.zip
