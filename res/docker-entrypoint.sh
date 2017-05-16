@@ -118,7 +118,6 @@ if [ -n "$ETF_TESTDRIVER_BSX_VERSION" ] && [ "$ETF_TESTDRIVER_BSX_VERSION" != "n
     echo "Downloading BSX test driver"
     get de/interactive_instruments/etf/testdriver/etf-bsxtd/ etf-bsxtd-[0-9\.]+.jar "$ETF_TESTDRIVER_BSX_VERSION" /tmp/etf-bsxtd.jar
     mv /tmp/etf-bsxtd.jar "$ETF_DIR"/td
-    rm /tmp/etf-bsxtd.jar
   fi
 fi
 
@@ -137,7 +136,6 @@ if [ -n "$ETF_TESTDRIVER_SUI_VERSION" ] && [ "$ETF_TESTDRIVER_SUI_VERSION" != "n
     echo "Downloading SUI test driver"
     get de/interactive_instruments/etf/testdriver/etf-suitd/ etf-suitd-[0-9\.]+.jar "$ETF_TESTDRIVER_SUI_VERSION" /tmp/etf-suitd.jar
     mv /tmp/etf-suitd.jar "$ETF_DIR"/td
-    rm /tmp/etf-suitd.jar
   fi
 fi
 
@@ -149,7 +147,6 @@ if [ -n "$ETF_TESTDRIVER_TE_VERSION" ] && [ "$ETF_TESTDRIVER_TE_VERSION" != "non
     echo "Downloading TE test driver"
     get de/interactive_instruments/etf/testdriver/etf-tetd/ etf-tetd-[0-9\.]+.jar "$ETF_TESTDRIVER_TE_VERSION" /tmp/etf-tetd.jar
     mv /tmp/etf-tetd.jar "$ETF_DIR"/td
-    rm /tmp/etf-tetd.jar
   fi
 fi
 
