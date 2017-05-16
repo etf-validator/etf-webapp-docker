@@ -122,6 +122,13 @@ if [ -n "$ETF_TESTDRIVER_BSX_VERSION" ] && [ "$ETF_TESTDRIVER_BSX_VERSION" != "n
   fi
 fi
 
+# Download GmlGeoX
+if [ ! -f "$ETF_DIR"/ds/db/repo/de/interactive_instruments/etf/bsxm/GmlGeoX.jar ] && [ -n "$ETF_GMLGEOX_VERSION" ] && [ "$ETF_GMLGEOX_VERSION" != "none" ]; then
+  get de/interactive_instruments/etf/bsxm/etf-gmlgeox/ etf-gmlgeox-[0-9\.]+.jar "$ETF_GMLGEOX_VERSION" /tmp/GmlGeoX.jar
+  mkdir -p "$ETF_DIR"/ds/db/repo/de/interactive_instruments/etf/bsxm/
+  mv /tmp/GmlGeoX.jar "$ETF_DIR"/ds/db/repo/de/interactive_instruments/etf/bsxm/
+fi
+
 # Download SoapUI test driver
 if [ -n "$ETF_TESTDRIVER_SUI_VERSION" ] && [ "$ETF_TESTDRIVER_SUI_VERSION" != "none" ]; then
   if ls "$ETF_DIR"/td/etf-suitd*.jar 1> /dev/null 2>&1; then
@@ -134,11 +141,16 @@ if [ -n "$ETF_TESTDRIVER_SUI_VERSION" ] && [ "$ETF_TESTDRIVER_SUI_VERSION" != "n
   fi
 fi
 
-# Download GmlGeoX
-if [ ! -f "$ETF_DIR"/ds/db/repo/de/interactive_instruments/etf/bsxm/GmlGeoX.jar ] && [ -n "$ETF_GMLGEOX_VERSION" ] && [ "$ETF_GMLGEOX_VERSION" != "none" ]; then
-  get de/interactive_instruments/etf/bsxm/etf-gmlgeox/ etf-gmlgeox-[0-9\.]+.jar "$ETF_GMLGEOX_VERSION" /tmp/GmlGeoX.jar
-  mkdir -p "$ETF_DIR"/ds/db/repo/de/interactive_instruments/etf/bsxm/
-  mv /tmp/GmlGeoX.jar "$ETF_DIR"/ds/db/repo/de/interactive_instruments/etf/bsxm/
+# Download TEAM Engine test driver
+if [ -n "$ETF_TESTDRIVER_TE_VERSION" ] && [ "$ETF_TESTDRIVER_TE_VERSION" != "none" ]; then
+  if ls "$ETF_DIR"/td/etf-tetd*.jar 1> /dev/null 2>&1; then
+    echo "Using existing TE test driver, skipping download"
+  else
+    echo "Downloading TE test driver"
+    get de/interactive_instruments/etf/testdriver/etf-tetd/ etf-tetd-[0-9\.]+.jar "$ETF_TESTDRIVER_TE_VERSION" /tmp/etf-tetd.jar
+    mv /tmp/etf-tetd.jar "$ETF_DIR"/td
+    rm /tmp/etf-tetd.jar
+  fi
 fi
 
 # Download Executable Test Suites
