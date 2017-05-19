@@ -14,6 +14,7 @@ etfproxy:
 etfwebapp:
  image: iide/etf-webapp
  restart: unless-stopped
+ # See Dockerfile for more environment configuration properties and explanations
  # environment:
   # - ETF_TESTPROJECTS_ZIP=https://github.com/.../master.zip
   # - PROJECT_DIRECTORY_NAME=custom-ets

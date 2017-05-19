@@ -44,6 +44,9 @@ ENV REPO_PWD etf-public-releases
 ENV ETF_DL_TESTPROJECTS_ZIP https://github.com/inspire-eu-validation/ets-repository/archive/master.zip
 # Subfolder in the projects directory
 ENV ETF_DL_TESTPROJECTS_DIR_NAME inspire-ets-repository
+# Possible values: true for overwriting the directory on every container start,
+false for keeping an existing directory
+ENV ETF_DL_TESTPROJECTS_OVERWRITE_EXISTING true
 
 # Maximum JAVA heap size (XmX parameter) in MB or “max” (max available memory-768MB if at least 3GB available)
 ENV MAX_MEM max

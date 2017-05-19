@@ -152,10 +152,17 @@ fi
 
 # Download Executable Test Suites
 if [ -n "$ETF_DL_TESTPROJECTS_ZIP" ] && [ "$ETF_DL_TESTPROJECTS_ZIP" != "none" ]; then
-  curl -Lk -o projects.zip "$ETF_DL_TESTPROJECTS_ZIP"
-  mkdir -p "$ETF_DIR"/projects/"$ETF_DL_TESTPROJECTS_DIR_NAME"
-  unzip -o projects.zip -d "$ETF_DIR"/projects/"$ETF_DL_TESTPROJECTS_DIR_NAME"
-  rm master.zip
+  if [ "$ETF_DL_TESTPROJECTS_OVERWRITE_EXISTING" == "true" ]; then
+    rm -R "$ETF_DIR"/projects/"$ETF_DL_TESTPROJECTS_DIR_NAME"
+  fi
+  if [ -d "$ETF_DIR"/projects/"$ETF_DL_TESTPROJECTS_DIR_NAME" ]; then
+    echo "Using existing Executable Test Suites, skipping download"
+  else
+    curl -Lk -o projects.zip "$ETF_DL_TESTPROJECTS_ZIP"
+    mkdir -p "$ETF_DIR"/projects/"$ETF_DL_TESTPROJECTS_DIR_NAME"
+    unzip -o projects.zip -d "$ETF_DIR"/projects/"$ETF_DL_TESTPROJECTS_DIR_NAME"
+    rm master.zip
+  fi
 fi
 
 
