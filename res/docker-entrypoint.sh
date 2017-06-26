@@ -33,7 +33,7 @@ getSpecificFromII() {
     dest=$4
     versionSubPath=$(wget -O- --user=$REPO_USER --password=$REPO_PWD $url | grep -v "maven" | grep $version | grep -o -E 'href="([^"#]+)"' | cut -d'"' -f2 | sort -V | tail -1)
     latest=$(wget -O- --user=$REPO_USER --password=$REPO_PWD $url/$versionSubPath | egrep -o $eex | sort -V | tail -1)
-    wget -q --user=$REPO_USER --password=$REPO_PWDs $url/$versionSubPath/$latest -O $dest
+    wget -q --user=$REPO_USER --password=$REPO_PWD $url/$versionSubPath/$latest -O $dest
     # TODO verifiy checksum
     md5sum $dest
     chown -R $appServerUserGroup $dest
