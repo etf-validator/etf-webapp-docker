@@ -4,7 +4,7 @@
 
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
-Docker image of the etf web application.
+Docker image of the ETF web application.
 ETF is an open source testing framework for testing geo network services and data.
 The image is based on the official jetty image.
 
@@ -67,21 +67,24 @@ wget https://raw.githubusercontent.com/interactive-instruments/etf-webapp-docker
 The compose script will setup a protected nginx webserver (User/Password: etf/etf)
 which forwards all requests to the etf-webapp container. The htpasswd.txt and
 the _nginx.conf_ files are mounted read only in the container.
-You can edit the nginx config file or use (htpasswd)[https://httpd.apache.org/docs/current/programs/htpasswd.html] on your linux
+You can edit the nginx config file or use [htpasswd](https://httpd.apache.org/docs/current/programs/htpasswd.html) on your linux
 machine to create your own credentials.
 
 Unless it is changed in the compose script (docker-compose.yml), the etf-webapp
 containers data directory is mounted to _/etf_ on your host system. This can be
-changed by editing the first values in the volumes section of the [docker-compose](https://github.com/interactive-instruments/etf-webapp-docker/blob/master/etfenv/docker-compose.yml#L21-L24)
+changed by editing the first values in the volumes section of the [docker-compose](https://github.com/interactive-instruments/etf-webapp-docker/blob/master/etfenv/docker-compose.yml#L21-L28)
 file. For instance for the directory '/home/user1/my_etf' :
 
 ```CMD
  volumes:
-  - /home/user1/my_etf:/etf/testdata
-  - /home/user1/my_etf:/etf/http_uploads
-  - /home/user1/my_etf:/etf/projects
-  - /home/user1/my_etf:/etf/bak
-  - /home/user1/my_etf:/etf/logs
+  - /home/user1/my_etf/config:/etf/config
+  - /home/user1/my_etf/testdata:/etf/testdata
+  - /home/user1/my_etf/http_uploads:/etf/http_uploads
+  - /home/user1/my_etf/projects:/etf/projects
+  - /home/user1/my_etf/bak:/etf/bak
+  - /home/user1/my_etf/logs:/etf/logs
+  - /home/user1/my_etf/ds/obj:/etf/ds/obj
+  - /home/user1/my_etf/ds/attachments:/etf/ds/attachments
 ```
 **Please note that docker-compose.yml is a YAML file and whitespace indentation
 is used to denote structure!**
@@ -92,7 +95,7 @@ To start the container run:
 docker-compose up -d
 ```
 
-On first start, the container will download the latest version of ETF
+On first start, the container will download the latest version of the ETF
 from the interactive instruments repository.
 
 The INSPIRE Executable Test Suites are automatically downloaded from the
@@ -108,7 +111,7 @@ Open your browser with the URL (http://localhost) and enter the
 credentials (default etf/etf) to access the web interface. If you access the
 interface not only from your local machine, you need to edit the
 etf-config.properties config file, which will be automatically created on
-first startup in the mounted _/etf/_ directory. Change _localhost_ in the property
+first startup in the mounted _/etf/config_ directory. Change _localhost_ in the property
 _etf.webapp.base.url_ to an IP or a domain name. Afterwards you need to restart
 the container:
 
@@ -131,16 +134,16 @@ docker-compose up -d
 ```
 
 This will destroy the container and create a new container with the ETF application.
-The _/etf_ data directly does not get deleted -as long as it mounted on your
+The _/etf_ data directory does not get deleted -as long as it is mounted on your
 host machine!
 
 ## Update Executable Test Suites
 To update the Executable Test Suites, you can copy the new Executable Test Suites
 into the _/etf/projects/_ directory (or the subdirectories). The instance will
-automatically reload the Executable Test Suites after some minutes.
+automatically reload the Executable Test Suites after some time.
 
 ## Custom Executable Test Suites
-If you want to deploy your instance directly with custom Executable Test Suites,
+If you want to deploy your instance directly with custom Executable Test Suites
 that are downloaded on container startup, you can change the environment
 variable _ETF_TESTPROJECTS_ZIP_ to another URL. See the
-[docker-compose.yml environment section](https://github.com/interactive-instruments/etf-webapp-docker/blob/master/etfenv/docker-compose.yml#L21-L22).
+[docker-compose.yml environment section](https://github.com/interactive-instruments/etf-webapp-docker/blob/master/etfenv/docker-compose.yml#L17-L19).
