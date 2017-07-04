@@ -72,7 +72,7 @@ machine to create your own credentials.
 
 Unless it is changed in the compose script (docker-compose.yml), the etf-webapp
 containers data directory is mounted to _/etf_ on your host system. This can be
-changed by editing the first values in the volumes section of the [docker-compose](https://github.com/interactive-instruments/etf-webapp-docker/blob/master/etfenv/docker-compose.yml#L21-L28)
+changed by editing the first values in the volumes section of the [docker-compose](https://github.com/interactive-instruments/etf-webapp-docker/blob/master/etfenv/docker-compose.yml#L23-L34)
 file. For instance for the directory '/home/user1/my_etf' :
 
 ```CMD
@@ -122,6 +122,40 @@ docker-compose restart
 ## Log file
 The log file etf.log is located in the _/etf/logs_ directory.
 
+## Organization internal proxy server
+If outgoing network traffic is filtered by a proxy server in your organization,
+you need to configure the container with proxy settings before startup.
+The container provides settings for configuring proxy server for HTTP and
+HTTP Secure:
+
+```CMD
+# Activate HTTP proxy server by setting a host (IP or DNS name).
+# Default: "none" for not using a proxy server
+HTTP_PROXY_HOST none
+# HTTP proxy server port. Default 8080. If you are using Squid it is 3128
+HTTP_PROXY_PORT 8080
+# Optional username for authenticating against HTTP proxy server or "none" to
+# deactivate authentication
+HTTP_PROXY_USERNAME none
+# Optional password for authenticating against HTTP proxy server or "none"
+HTTP_PROXY_PASSWORD none
+
+# Activate HTTP Secure proxy server by setting a host (IP or DNS name).
+# Default: "none" for not using a proxy server
+HTTPS_PROXY_HOST none
+# HTTP Secure proxy server port. Default 3129.
+HTTPS_PROXY_PORT 3129
+# Optional username for authenticating against HTTPS proxy server or "none" to
+# deactivate authentication
+HTTPS_PROXY_USERNAME none
+# Optional password for authenticating against HTTP Secure proxy server or "none"
+HTTPS_PROXY_PASSWORD none
+```
+
+These settings can be added in the
+[docker-compose](https://github.com/interactive-instruments/etf-webapp-docker/blob/master/etfenv/docker-compose.yml#L21)
+file.
+
 ## Update ETF
 Run the following commands in the directory of the ETF compose script to stop
 and update the container:
@@ -146,4 +180,4 @@ automatically reload the Executable Test Suites after some time.
 If you want to deploy your instance directly with custom Executable Test Suites
 that are downloaded on container startup, you can change the environment
 variable _ETF_TESTPROJECTS_ZIP_ to another URL. See the
-[docker-compose.yml environment section](https://github.com/interactive-instruments/etf-webapp-docker/blob/master/etfenv/docker-compose.yml#L17-L19).
+[docker-compose.yml environment section](https://github.com/interactive-instruments/etf-webapp-docker/blob/master/etfenv/docker-compose.yml#L19).
