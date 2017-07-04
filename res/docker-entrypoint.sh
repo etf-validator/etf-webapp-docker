@@ -9,8 +9,9 @@ basicArtifactoryUrl=$REPO_URL
 appServerDeplPath=/var/lib/jetty/webapps
 appServerUserGroup=jetty:jetty
 
-wgetRcFile="~/.wgetrc"
-echo "user=$REPO_USER" > $wgetRcFile
+wgetRcFile="/root/.wgetrc"
+touch $wgetRcFile
+echo "user=$REPO_USER" >> $wgetRcFile
 echo "password=$REPO_PWD" >> $wgetRcFile
 
 if [[ -n "$HTTP_PROXY_HOST" && "$HTTP_PROXY_HOST" != "none" ]] || [[ -n "$HTTPS_PROXY_HOST" && "$HTTPS_PROXY_HOST" != "none" ]]; then
@@ -34,11 +35,11 @@ javaHttpsProxyOpts=""
 if [[ -n "$HTTPS_PROXY_HOST" && "$HTTPS_PROXY_HOST" != "none" ]]; then
   if [[ -n "$HTTPS_PROXY_USERNAME" && "$HTTPS_PROXY_USERNAME" != "none" ]]; then
     echo "Using HTTP Secure proxy server $HTTPS_PROXY_HOST on port $HTTPS_PROXY_PORT as user $HTTPS_PROXY_USERNAME"
-    javaHttpProxyOpts="-Dhttps.proxyHost=$HTTPS_PROXY_HOST -Dhttps.proxyPort=$HTTPS_PROXY_PORT -Dhttps.proxyUser=$HTTPS_PROXY_USERNAME -Dhttps.proxyPassword=$HTTPS_PROXY_PASSWORD"
+    javaHttpsProxyOpts="-Dhttps.proxyHost=$HTTPS_PROXY_HOST -Dhttps.proxyPort=$HTTPS_PROXY_PORT -Dhttps.proxyUser=$HTTPS_PROXY_USERNAME -Dhttps.proxyPassword=$HTTPS_PROXY_PASSWORD"
     echo "https_proxy=https://$HTTPS_PROXY_USERNAME:$HTTPS_PROXY_PASSWORD@$HTTPS_PROXY_HOST:$HTTPS_PROXY_PORT" >> $wgetRcFile
   else
     echo "Using HTTP Secure proxy server $HTTPS_PROXY_HOST on port $HTTPS_PROXY_PORT"
-    javaHttpProxyOpts="-Dhttps.proxyHost=$HTTPS_PROXY_HOST -Dhttps.proxyPort=$HTTPS_PROXY_PORT"
+    javaHttpsProxyOpts="-Dhttps.proxyHost=$HTTPS_PROXY_HOST -Dhttps.proxyPort=$HTTPS_PROXY_PORT"
     echo "https_proxy=https://$HTTPS_PROXY_HOST:$HTTPS_PROXY_PORT" >> $wgetRcFile
   fi
 fi
@@ -117,7 +118,7 @@ if [[ $max_mem_kb -lt 1048576 ]]; then
   exit 1;
 fi
 
-JAVA_OPTIONS="-server -XX:+UseConcMarkSweepGC -XX:+UseParNewGC $xms_xmx"
+JAVA_OPTIONS="-server -XX:+UseConcMarkSweepGC -XX:+UseParNewGC $xms_xmx $javaHttpProxyOpts $javaHttpsProxyOpts"
 export JAVA_OPTIONS
 echo "Using JAVA_OPTIONS: ${JAVA_OPTIONS}"
 
@@ -221,12 +222,12 @@ chmod 775 "$ETF_DIR"/logs/etf.log
 chown -fR $appServerUserGroup $ETF_DIR
 
 if ! command -v -- "$1" >/dev/null 2>&1 ; then
-	set -- java -jar "$JETTY_HOME/start.jar" $javaHttpsProxyOpts $javaHttpsProxyOpts "$@"
+	set -- java -jar "$JETTY_HOME/start.jar" $javaHttpProxyOpts $javaHttpsProxyOpts "$@"
 fi
 
 if [ "$1" = "java" -a -n "$JAVA_OPTIONS" ] ; then
 	shift
-	set -- java -Djava.io.tmpdir=$TMPDIR $JAVA_OPTIONS $JAVA_OPTIONS $javaHttpsProxyOpts $javaHttpsProxyOpts "$@"
+	set -- java -Djava.io.tmpdir=$TMPDIR $JAVA_OPTIONS $JAVA_OPTIONS "$@"
 fi
 
 exec "$@"
