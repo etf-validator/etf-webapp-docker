@@ -3,6 +3,9 @@
 # by any of the configured Template Resolvers" is thrown
 FROM jetty:9.3.6
 MAINTAINER Jon Herrmann <herrmann at interactive-instruments.de>
+LABEL maintainer="Jon Herrmann <herrmann@interactive-instruments.de>"
+
+LABEL Name="etf-webapp" Description="Testing framework for spatial data and services" Vendor="interactive instruments GmbH" Version=“2”
 
 EXPOSE 8080
 
