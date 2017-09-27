@@ -25,11 +25,6 @@ ENV ETF_TESTDRIVER_BSX_VERSION latest
 
 # Possible values: “latest”, <version as MAJOR.MINOR.BUGFIX> or
 # <version as MAJOR.MINOR>
-# Will be downloaded
-ENV ETF_GMLGEOX_VERSION latest
-
-# Possible values: “latest”, <version as MAJOR.MINOR.BUGFIX> or
-# <version as MAJOR.MINOR>
 # Packed with the Webapp
 ENV ETF_TESTDRIVER_SUI_VERSION latest
 

@@ -12,7 +12,7 @@ etfproxy:
 
 # ETF validator
 etfwebapp:
- image: iide/etf-webapp
+ image: iide/etf-webapp:dev
  restart: unless-stopped
  # See Dockerfile for more environment configuration properties and explanations
  # environment:
