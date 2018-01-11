@@ -40,8 +40,8 @@ ENV ETF_TESTDRIVER_TE_VERSION latest
 
 # Default repository configuration
 ENV REPO_URL https://services.interactive-instruments.de/etfdev-af/etf-public-releases
-ENV REPO_USER etf-public-releases
-ENV REPO_PWD etf-public-releases
+ENV REPO_USER etf-public-dev
+ENV REPO_PWD etf-public-dev
 
 # Possible values: “none” or URL to ZIP file
 ENV ETF_DL_TESTPROJECTS_ZIP https://github.com/inspire-eu-validation/ets-repository/archive/master.zip
