@@ -39,7 +39,7 @@ ENV ETF_TESTDRIVER_SUI_VERSION latest
 ENV ETF_TESTDRIVER_TE_VERSION latest
 
 # Default repository configuration
-ENV REPO_URL https://services.interactive-instruments.de/etfdev-af/etf-public-releases
+ENV REPO_URL https://services.interactive-instruments.de/etfdev-af/etf-public-dev
 ENV REPO_USER etf-public-dev
 ENV REPO_PWD etf-public-dev
 
