@@ -1,7 +1,4 @@
-# Only works with version 9.3.6 or error:
-# "...template might not exist or might not be accessible
-# by any of the configured Template Resolvers" is thrown
-FROM jetty:9.3.6
+FROM jetty:9.4
 MAINTAINER Jon Herrmann <herrmann at interactive-instruments.de>
 LABEL maintainer="Jon Herrmann <herrmann@interactive-instruments.de>"
 
