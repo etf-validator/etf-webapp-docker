@@ -40,6 +40,10 @@ ENV REPO_USER etf-public-dev
 ENV REPO_PWD etf-public-dev
 
 # Possible values: “none” or URL to ZIP file
+<<<<<<< HEAD
+=======
+# ENV ETF_DL_TESTPROJECTS_ZIP https://github.com/inspire-eu-validation/ets-repository/archive/master.zip
+>>>>>>> 9fb8e3c48e877dc1170f31b770d7ecb59034e690
 ENV ETF_DL_TESTPROJECTS_ZIP https://github.com/inspire-eu-validation/ets-repository/archive/md-tg-2.0.zip
 # Subfolder in the projects directory
 ENV ETF_DL_TESTPROJECTS_DIR_NAME inspire-ets-repository
