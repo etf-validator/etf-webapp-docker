@@ -1,4 +1,4 @@
-FROM jetty:9.4
+FROM jetty:9.3.6
 MAINTAINER Jon Herrmann <herrmann at interactive-instruments.de>
 LABEL maintainer="Jon Herrmann <herrmann@interactive-instruments.de>"
 
@@ -10,7 +10,6 @@ ENV ETF_DIR /etf
 ENV ETF_LOG_DIR /etf/logs
 
 ENV ETF_RELATIVE_URL etf-webapp
-
 # Possible values: “latest”, <version as MAJOR.MINOR.BUGFIX> e.g. “2.0.0” or
 # <version as MAJOR.MINOR> e.g. “1.0” to get the latest bugfix version
 ENV ETF_WEBAPP_VERSION latest
@@ -41,7 +40,7 @@ ENV REPO_USER etf-public-dev
 ENV REPO_PWD etf-public-dev
 
 # Possible values: “none” or URL to ZIP file
-ENV ETF_DL_TESTPROJECTS_ZIP https://github.com/inspire-eu-validation/ets-repository/archive/master.zip
+ENV ETF_DL_TESTPROJECTS_ZIP https://github.com/inspire-eu-validation/ets-repository/archive/md-tg-2.0.zip
 # Subfolder in the projects directory
 ENV ETF_DL_TESTPROJECTS_DIR_NAME inspire-ets-repository
 # Possible values: true for overwriting the directory on every container start,
@@ -76,5 +75,6 @@ ENV HTTPS_PROXY_PASSWORD none
 RUN mv /docker-entrypoint.bash /docker-entrypoint-jetty.bash
 COPY res/docker-entrypoint.sh /
 
+COPY --chown=jetty:jetty $ETF_RELATIVE_URL.war /var/lib/jetty/webapps
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["java","-jar","/usr/local/jetty/start.jar"]
