@@ -6,17 +6,15 @@
 
 Docker image of the ETF web application.
 ETF is an open source testing framework for testing geo network services and data.
-The image is based on the official jetty image.
+The image is mainly used for testing purposes and therefore the container loads the latest development version. The image is based on the official jetty image. 
 
-Please open a new issue for questions and issues regarding the installation of the docker image [here](https://github.com/interactive-instruments/etf-webapp-docker/issues).
+Please open a new issue for questions and issues regarding the installation of the docker image [here](https://github.com/etf-validator/etf-webapp-docker/issues).
 
-Please open a new issue for questions and issues regarding the ETF validator [here](https://github.com/interactive-instruments/etf-webapp/issues).
+Please open a new issue for questions and issues regarding the ETF validator [here](https://github.com/etf-validator/etf-webapp/issues).
 
 ## Prerequesites
 
-This docker image requires an [installed and configured the docker-engine](https://docs.docker.com/engine/installation/). This image has been tested on
-Linux machines, on Windows machines you need at least a 64bit Windows 10 with
-Hyper-V support. Please see the [ETF wiki](https://github.com/interactive-instruments/etf-webapp/wiki) for alternative installation options.
+This docker image requires an [installed and configured the docker-engine](https://docs.docker.com/engine/installation/). The image has been tested on Linux machines.
 
 It is recommended to install [docker-compose](https://docs.docker.com/compose/install/) for securing the instance with an
 HTTP proxy server and for easier updating.
@@ -59,9 +57,9 @@ docker-compose -v
 Create a 'etfenv' directory and download the three files:
 ```CMD
 mkdir etfenv && cd etfenv && \
-wget https://raw.githubusercontent.com/interactive-instruments/etf-webapp-docker/master/etfenv/docker-compose.yml && \
-wget https://raw.githubusercontent.com/interactive-instruments/etf-webapp-docker/master/etfenv/htpasswd.txt && \
-wget https://raw.githubusercontent.com/interactive-instruments/etf-webapp-docker/master/etfenv/nginx.conf
+wget https://raw.githubusercontent.com/etf-validator/etf-webapp-docker/master/etfenv/docker-compose.yml && \
+wget https://raw.githubusercontent.com/etf-validator/etf-webapp-docker/master/etfenv/htpasswd.txt && \
+wget https://raw.githubusercontent.com/etf-validator/etf-webapp-docker/master/etfenv/nginx.conf
 ```
 
 The compose script will setup a protected nginx webserver (User/Password: etf/etf)
@@ -72,7 +70,7 @@ machine to create your own credentials.
 
 Unless it is changed in the compose script (docker-compose.yml), the etf-webapp
 containers data directory is mounted to _/etf_ on your host system. This can be
-changed by editing the first values in the volumes section of the [docker-compose](https://github.com/interactive-instruments/etf-webapp-docker/blob/master/etfenv/docker-compose.yml#L23-L34)
+changed by editing the first values in the volumes section of the [docker-compose](https://github.com/etf-validator/etf-webapp-docker/blob/master/etfenv/docker-compose.yml#L23-L34)
 file. For instance for the directory '/home/user1/my_etf' :
 
 ```CMD
@@ -153,7 +151,7 @@ HTTPS_PROXY_PASSWORD none
 ```
 
 These settings can be added in the
-[docker-compose](https://github.com/interactive-instruments/etf-webapp-docker/blob/master/etfenv/docker-compose.yml#L21)
+[docker-compose](https://github.com/etf-validator/etf-webapp-docker/blob/master/etfenv/docker-compose.yml#L21)
 file.
 
 ## Update ETF
@@ -180,4 +178,4 @@ automatically reload the Executable Test Suites after some time.
 If you want to deploy your instance directly with custom Executable Test Suites
 that are downloaded on container startup, you can change the environment
 variable _ETF_TESTPROJECTS_ZIP_ to another URL. See the
-[docker-compose.yml environment section](https://github.com/interactive-instruments/etf-webapp-docker/blob/master/etfenv/docker-compose.yml#L19).
+[docker-compose.yml environment section](https://github.com/etf-validator/etf-webapp-docker/blob/master/etfenv/docker-compose.yml#L19).
